@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"playgama_bridge_callbacks_example",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"playgama_bridge_callbacks_example",
+  "parent":{
+    "name":"playgama_bridge",
+    "path":"folders/Scripts/playgama_bridge.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
