@@ -30,7 +30,7 @@
   ],
   "IncludedFiles":[
     {"$GMIncludedFile":"","%Name":"playgama-bridge-index.html","CopyToMask":32,"filePath":"datafiles","name":"playgama-bridge-index.html","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"playgama-bridge.js","CopyToMask":32,"filePath":"datafiles","name":"playgama-bridge.js","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"playgama-bridge.js","CopyToMask":-1,"filePath":"datafiles","name":"playgama-bridge.js","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
   ],
   "isEcma":false,
   "LibraryEmitters":[],
@@ -40,6 +40,7 @@
   "name":"playgama-bridge-gamemaker",
   "resources":[
     {"id":{"name":"playgama_bridge","path":"extensions/playgama_bridge/playgama_bridge.yy",},},
+    {"id":{"name":"obj_example","path":"objects/obj_example/obj_example.yy",},},
     {"id":{"name":"obj_playgama_bridge_callbacks_example","path":"objects/obj_playgama_bridge_callbacks_example/obj_playgama_bridge_callbacks_example.yy",},},
     {"id":{"name":"room_main","path":"rooms/room_main/room_main.yy",},},
     {"id":{"name":"playgama_bridge_callbacks_example","path":"scripts/playgama_bridge_callbacks_example/playgama_bridge_callbacks_example.yy",},},
