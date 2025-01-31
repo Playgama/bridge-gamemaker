@@ -1,31 +1,4 @@
-// common callback for every method
-function playgama_bridge_callback(subtype, data) {
-	
-	show_debug_message("playgama_bridge_callback")
-	show_debug_message(subtype)
-	show_debug_message(data)
-	
-	// check subtype
-	if subtype == "advertisement_interstitial_state_changed" {
-		switch data {
-			case "loading":
-				// your logic here
-				break
-			case "opened":
-				// your logic here
-				break
-			case "closed":
-				// your logic here
-				break
-			case "failed":
-				// your logic here
-				break
-		}
-	}
-	
-}
-
-// direct advertisement callbacks
+// advertisement callbacks
 function playgama_bridge_advertisement_interstitial_state_changed(data) {
 	switch data {
 		case "loading":
@@ -80,14 +53,16 @@ function playgama_bridge_advertisement_banner_state_changed(data) {
 	}
 }
 
-function playgama_bridge_advertisement_check_adblock_callback(data) {
-	if data == true {
-		// adblock detected
+function playgama_bridge_advertisement_check_adblock_callback(success, data) {
+	if success {
+		if data {
+			// adblock detected
+		}
 	}
 }
 
 
-// direct game callbacks
+// game callbacks
 function playgama_bridge_game_visibility_state_changed(data) {
 	switch data {
 		case "visible":
@@ -100,17 +75,43 @@ function playgama_bridge_game_visibility_state_changed(data) {
 }
 
 
-// direct platform callbacks
-function playgama_bridge_platform_get_server_time_callback(data) {
-	if data {
+// platform callbacks
+function playgama_bridge_platform_get_server_time_callback(success, data) {
+	if success {
 		// your logic here
 	}
 }
 
 
-// direct storage callbacks
-function playgama_bridge_storage_get_callback(data) {
-	if data {
-		// your logic here
+// storage callbacks
+function playgama_bridge_storage_get_callback(success, data) {
+	if success {
+		// single key
+		if !is_undefined(data) {
+			// your logic
+		}
+		
+		// multiple keys
+		var values = json_parse(data)
+		if !is_undefined(values[0]) {
+			// your logic
+		}
+		
+	
+		if !is_undefined(values[1]) {
+			// your logic
+		}
+	}
+}
+
+function playgama_bridge_storage_set_callback(success) {
+	if success {
+		// your logic
+	}
+}
+
+function playgama_bridge_storage_delete_callback(success) {
+	if success {
+		// your logic
 	}
 }

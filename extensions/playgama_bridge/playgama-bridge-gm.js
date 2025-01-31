@@ -63,10 +63,10 @@ function playgamaBridgeAdvertisementHideBanner() {
 function playgamaBridgeAdvertisementCheckAdblock() {
     window.bridge.advertisement.checkAdBlock()
         .then((data) => {
-            sendCallbackToGameMaker('advertisement_check_adblock', data)
+            sendCallbackToGameMaker('advertisement_check_adblock', true, data)
         })
         .catch(() => {
-            sendCallbackToGameMaker('advertisement_check_adblock')
+            sendCallbackToGameMaker('advertisement_check_adblock', false)
         })
 }
 
@@ -95,10 +95,10 @@ function playgamaBridgePlatformSendMessage(message) {
 function playgamaBridgePlatformGetServerTime() {
     window.bridge.platform.getServerTime()
         .then((data) => {
-            sendCallbackToGameMaker('platform_get_server_time', data)
+            sendCallbackToGameMaker('platform_get_server_time', true, data)
         })
         .catch(() => {
-            sendCallbackToGameMaker('platform_get_server_time')
+            sendCallbackToGameMaker('platform_get_server_time', false)
         })
 }
 
@@ -111,63 +111,77 @@ function playgamaBridgeGameVisibilityState() {
 
 // storage
 function playgamaBridgeStorageSet(key, value, storageType) {
+    console.log('JS playgamaBridgeStorageSet', key, value, storageType)
+
+    try {
+        key = JSON.parse(key)
+        value = JSON.parse(value)
+    }
+    catch (e) {}
+
     window.bridge.storage.set(key, value, storageType)
         .then(() => {
             sendCallbackToGameMaker('storage_set', true)
         })
         .catch(() => {
-            sendCallbackToGameMaker('storage_set')
+            sendCallbackToGameMaker('storage_set', false)
         })
 }
 
 function playgamaBridgeStorageGet(key, storageType) {
+    console.log('JS playgamaBridgeStorageGet', key, storageType)
+
+    try {
+        key = JSON.parse(key)
+    }
+    catch (e) {}
+
     window.bridge.storage.get(key, storageType, false)
         .then((data) => {
-            sendCallbackToGameMaker('storage_get', data)
+            console.log('JS playgamaBridgeStorageGet THEN', data)
+            sendCallbackToGameMaker('storage_get', true, data)
         })
         .catch(() => {
-            sendCallbackToGameMaker('storage_get')
+            sendCallbackToGameMaker('storage_get', false)
         })
 }
 
 function playgamaBridgeStorageDelete(key, storageType) {
+    console.log('JS playgamaBridgeStorageDelete', key, storageType)
+
+    try {
+        key = JSON.parse(key)
+    }
+    catch (e) {}
+
     window.bridge.storage.delete(key, storageType)
         .then(() => {
             sendCallbackToGameMaker('storage_delete', true)
         })
         .catch(() => {
-            sendCallbackToGameMaker('storage_delete')
+            sendCallbackToGameMaker('storage_delete', false)
         })
 }
 
 
+// utils
 function sendStateToGameMaker(type, state) {
     let serializedState = this.serializeData(state)
-    callGameMakerCommonCallbackFunction(type, serializedState, true)
     callGameMakerSpecifiedStateCallbackFunction(type, serializedState)
-    sendSocialEventToGameMaker(type, serializedState, false, true)
-    sendSocialEventToGameMaker(type, serializedState, true, true)
+    sendSocialEventStateToGameMaker(type, serializedState)
 }
 
-function sendCallbackToGameMaker(type, data) {
+function sendCallbackToGameMaker(type, success, data) {
     let serializedData = serializeData(data)
-    callGameMakerCommonCallbackFunction(type, serializedData)
-    callGameMakerSpecifiedCallbackFunction(type, serializedData)
-    sendSocialEventToGameMaker(type, serializedData)
-    sendSocialEventToGameMaker(type, serializedData, true)
+    let serializedSuccess = serializeData(success)
+    callGameMakerSpecifiedCallbackFunction(type, serializedSuccess, serializedData)
+    sendSocialEventCallbackToGameMaker(type, serializedSuccess, serializedData)
 }
 
-function callGameMakerCommonCallbackFunction(subtype, data, isState = false) {
-    let formattedSubtype = isState ? formatCommonStateCallbackType(subtype) : subtype
-    if (window['gml_Script_playgama_bridge_callback']) {
-        window['gml_Script_playgama_bridge_callback'](null, null, formattedSubtype, data)
-    }
-}
-
-function callGameMakerSpecifiedCallbackFunction(type, data) {
+function callGameMakerSpecifiedCallbackFunction(type, success, data) {
     let formattedType = formatSpecifiedCallbackType(type)
     if (window[`gml_Script_${formattedType}`]) {
-        window[`gml_Script_${formattedType}`](null, null, data)
+        window[`gml_Script_${formattedType}`](null, null, success, data)
     }
 }
 
@@ -178,15 +192,22 @@ function callGameMakerSpecifiedStateCallbackFunction(type, data) {
     }
 }
 
-function sendSocialEventToGameMaker(type, data = null, isSpecified = false, isState = false) {
+function sendSocialEventCallbackToGameMaker(type, success, data = null) {
     let map = {
-        type: isSpecified
-            ? isState ? formatSpecifiedStateCallbackType(type) : formatSpecifiedCallbackType(type)
-            : 'playgama_bridge_callback'
+        type: formatSpecifiedCallbackType(type),
+        success,
     }
 
-    if (!isSpecified) {
-        map.subtype = isState ? `${type}_changed` : type
+    if (data !== null) {
+        map.data = data
+    }
+
+    window.GMS_API.send_async_event_social(map)
+}
+
+function sendSocialEventStateToGameMaker(type, data = null) {
+    let map = {
+        type: formatSpecifiedStateCallbackType(type)
     }
 
     if (data !== null) {
@@ -204,11 +225,11 @@ function formatSpecifiedStateCallbackType(type) {
     return `playgama_bridge_${type}_changed`
 }
 
-function formatCommonStateCallbackType(type) {
-    return `${type}_changed`
-}
-
 function serializeData(data) {
+    if (data === null) {
+        return undefined
+    }
+
     switch (typeof data) {
         case 'number':
             return String(data)
@@ -217,6 +238,6 @@ function serializeData(data) {
         case 'string':
             return data
         default:
-            return json_stringify(data)
+            return JSON.stringify(data)
     }
 }
