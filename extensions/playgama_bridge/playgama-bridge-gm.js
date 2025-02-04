@@ -53,6 +53,11 @@ function playgamaBridgeAdvertisementSetMinimumDelayBetweenInterstitial(value) {
 }
 
 function playgamaBridgeAdvertisementShowBanner(options) {
+    try {
+        options = JSON.parse(options)
+    }
+    catch (e) {}
+
     window.bridge.advertisement.showBanner(options)
 }
 
@@ -81,11 +86,11 @@ function playgamaBridgePlatformLanguage() {
 }
 
 function playgamaBridgePlatformPayload() {
-    return window.bridge.platform.payload
+    return serializeData(window.bridge.platform.payload)
 }
 
 function playgamaBridgePlatformTld() {
-    return window.bridge.platform.tld
+    return serializeData(window.bridge.platform.tld)
 }
 
 function playgamaBridgePlatformSendMessage(message) {
@@ -110,9 +115,19 @@ function playgamaBridgeGameVisibilityState() {
 
 
 // storage
-function playgamaBridgeStorageSet(key, value, storageType) {
-    console.log('JS playgamaBridgeStorageSet', key, value, storageType)
+function playgamaBridgeStorageDefaultType() {
+    return window.bridge.storage.defaultType
+}
 
+function playgamaBridgeStorageIsSupported(storageType) {
+    return serializeData(window.bridge.storage.isSupported(storageType))
+}
+
+function playgamaBridgeStorageIsAvailable(storageType) {
+    return serializeData(window.bridge.storage.isAvailable(storageType))
+}
+
+function playgamaBridgeStorageSet(key, value, storageType) {
     try {
         key = JSON.parse(key)
         value = JSON.parse(value)
@@ -129,8 +144,6 @@ function playgamaBridgeStorageSet(key, value, storageType) {
 }
 
 function playgamaBridgeStorageGet(key, storageType) {
-    console.log('JS playgamaBridgeStorageGet', key, storageType)
-
     try {
         key = JSON.parse(key)
     }
@@ -138,7 +151,6 @@ function playgamaBridgeStorageGet(key, storageType) {
 
     window.bridge.storage.get(key, storageType, false)
         .then((data) => {
-            console.log('JS playgamaBridgeStorageGet THEN', data)
             sendCallbackToGameMaker('storage_get', true, data)
         })
         .catch(() => {
@@ -147,8 +159,6 @@ function playgamaBridgeStorageGet(key, storageType) {
 }
 
 function playgamaBridgeStorageDelete(key, storageType) {
-    console.log('JS playgamaBridgeStorageDelete', key, storageType)
-
     try {
         key = JSON.parse(key)
     }
@@ -160,6 +170,407 @@ function playgamaBridgeStorageDelete(key, storageType) {
         })
         .catch(() => {
             sendCallbackToGameMaker('storage_delete', false)
+        })
+}
+
+
+// device
+function playgamaBridgeDeviceType() {
+    return window.bridge.device.type
+}
+
+
+// player
+function playgamaBridgePlayerIsAuthorizationSupported() {
+    return serializeData(window.bridge.player.isAuthorizationSupported)
+}
+
+function playgamaBridgePlayerIsAuthorized() {
+    return serializeData(window.bridge.player.isAuthorized)
+}
+
+function playgamaBridgePlayerId() {
+    return serializeData(window.bridge.player.id)
+}
+
+function playgamaBridgePlayerName() {
+    return serializeData(window.bridge.player.name)
+}
+
+function playgamaBridgePlayerPhotos() {
+    return serializeData(window.bridge.player.photos)
+}
+
+function playgamaBridgePlayerAuthorize(options) {
+    try {
+        options = JSON.parse(options)
+    }
+    catch (e) {}
+
+    window.bridge.player.authorize(options)
+        .then(() => {
+            sendCallbackToGameMaker('player_authorize', true)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('player_authorize', false)
+        })
+}
+
+
+// social
+function playgamaBridgeSocialIsShareSupported() {
+    return serializeData(window.bridge.social.isShareSupported)
+}
+
+function playgamaBridgeSocialShare(options) {
+    try {
+        options = JSON.parse(options)
+    }
+    catch (e) {}
+
+    window.bridge.social.share(options)
+        .then(() => {
+            sendCallbackToGameMaker('social_share', true)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('social_share', false)
+        })
+}
+
+function playgamaBridgeSocialIsJoinCommunitySupported() {
+    return serializeData(window.bridge.social.isJoinCommunitySupported)
+}
+
+function playgamaBridgeSocialJoinCommunity(options) {
+    try {
+        options = JSON.parse(options)
+    }
+    catch (e) {}
+
+    window.bridge.social.joinCommunity(options)
+        .then(() => {
+            sendCallbackToGameMaker('social_join_community', true)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('social_join_community', false)
+        })
+}
+
+function playgamaBridgeSocialIsInviteFriendsSupported() {
+    return serializeData(window.bridge.social.isInviteFriendsSupported)
+}
+
+function playgamaBridgeSocialInviteFriends(options) {
+    try {
+        options = JSON.parse(options)
+    }
+    catch (e) {}
+
+    window.bridge.social.inviteFriends(options)
+        .then(() => {
+            sendCallbackToGameMaker('social_invite_friends', true)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('social_invite_friends', false)
+        })
+}
+
+function playgamaBridgeSocialIsCreatePostSupported() {
+    return serializeData(window.bridge.social.isCreatePostSupported)
+}
+
+function playgamaBridgeSocialCreatePost(options) {
+    try {
+        options = JSON.parse(options)
+    }
+    catch (e) {}
+
+    window.bridge.social.createPost(options)
+        .then(() => {
+            sendCallbackToGameMaker('social_create_post', true)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('social_create_post', false)
+        })
+}
+
+function playgamaBridgeSocialIsAddToFavoritesSupported() {
+    return serializeData(window.bridge.social.isAddToFavoritesSupported)
+}
+
+function playgamaBridgeSocialAddToFavorites() {
+    window.bridge.social.addToFavorites()
+        .then(() => {
+            sendCallbackToGameMaker('social_add_to_favorites', true)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('social_add_to_favorites', false)
+        })
+}
+
+function playgamaBridgeSocialIsAddToHomeScreenSupported() {
+    return serializeData(window.bridge.social.isAddToHomeScreenSupported)
+}
+
+function playgamaBridgeSocialAddToHomeScreen() {
+    window.bridge.social.addToHomeScreen()
+        .then(() => {
+            sendCallbackToGameMaker('social_add_to_home_screen', true)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('social_add_to_home_screen', false)
+        })
+}
+
+function playgamaBridgeSocialIsRateSupported() {
+    return serializeData(window.bridge.social.isRateSupported)
+}
+
+function playgamaBridgeSocialRate() {
+    window.bridge.social.rate()
+        .then(() => {
+            sendCallbackToGameMaker('social_rate', true)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('social_rate', false)
+        })
+}
+
+function playgamaBridgeSocialIsExternalLinksAllowed() {
+    return serializeData(window.bridge.social.isExternalLinksAllowed)
+}
+
+
+// leaderboard
+function playgamaBridgeLeaderboardIsSupported() {
+    return serializeData(window.bridge.leaderboard.isSupported)
+}
+
+function playgamaBridgeLeaderboardIsNativePopupSupported() {
+    return serializeData(window.bridge.leaderboard.isNativePopupSupported)
+}
+
+function playgamaBridgeLeaderboardIsMultipleBoardsSupported() {
+    return serializeData(window.bridge.leaderboard.isMultipleBoardsSupported)
+}
+
+function playgamaBridgeLeaderboardIsSetScoreSupported() {
+    return serializeData(window.bridge.leaderboard.isSetScoreSupported)
+}
+
+function playgamaBridgeLeaderboardIsGetScoreSupported() {
+    return serializeData(window.bridge.leaderboard.isGetScoreSupported)
+}
+
+function playgamaBridgeLeaderboardIsGetEntriesSupported() {
+    return serializeData(window.bridge.leaderboard.isGetEntriesSupported)
+}
+
+function playgamaBridgeLeaderboardSetScore(options) {
+    try {
+        options = JSON.parse(options)
+    }
+    catch (e) {}
+
+    window.bridge.leaderboard.setScore(options)
+        .then(() => {
+            sendCallbackToGameMaker('leaderboard_set_score', true)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('leaderboard_set_score', false)
+        })
+}
+
+function playgamaBridgeLeaderboardGetScore(options) {
+    try {
+        options = JSON.parse(options)
+    }
+    catch (e) {}
+
+    window.bridge.leaderboard.getScore(options)
+        .then((data) => {
+            sendCallbackToGameMaker('leaderboard_get_score', true, data)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('leaderboard_get_score', false)
+        })
+}
+
+function playgamaBridgeLeaderboardGetEntries(options) {
+    try {
+        options = JSON.parse(options)
+    }
+    catch (e) {}
+
+    window.bridge.leaderboard.getEntries(options)
+        .then((data) => {
+            sendCallbackToGameMaker('leaderboard_get_entries', true, data)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('leaderboard_get_entries', false)
+        })
+}
+
+function playgamaBridgeLeaderboardShowNativePopup(options) {
+    try {
+        options = JSON.parse(options)
+    }
+    catch (e) {}
+
+    window.bridge.leaderboard.showNativePopup(options)
+        .then(() => {
+            sendCallbackToGameMaker('leaderboard_show_native_popup', true)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('leaderboard_show_native_popup', false)
+        })
+}
+
+
+// achievements
+function playgamaBridgeAchievementsIsSupported() {
+    return serializeData(window.bridge.achievements.isSupported)
+}
+
+function playgamaBridgeAchievementsIsGetListSupported() {
+    return serializeData(window.bridge.achievements.isGetListSupported)
+}
+
+function playgamaBridgeAchievementsIsNativePopupSupported() {
+    return serializeData(window.bridge.achievements.isNativePopupSupported)
+}
+
+function playgamaBridgeAchievementsUnlock(options) {
+    try {
+        options = JSON.parse(options)
+    }
+    catch (e) {}
+
+    window.bridge.achievements.unlock(options)
+        .then(() => {
+            sendCallbackToGameMaker('achievements_unlock', true)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('achievements_unlock', false)
+        })
+}
+
+function playgamaBridgeAchievementsGetList(options) {
+    try {
+        options = JSON.parse(options)
+    }
+    catch (e) {}
+
+    window.bridge.achievements.getList(options)
+        .then((data) => {
+            sendCallbackToGameMaker('achievements_get_list', true, data)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('achievements_get_list', false)
+        })
+}
+
+function playgamaBridgeAchievementsShowNativePopup(options) {
+    try {
+        options = JSON.parse(options)
+    }
+    catch (e) {}
+
+    window.bridge.achievements.showNativePopup(options)
+        .then(() => {
+            sendCallbackToGameMaker('achievements_show_native_popup', true)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('achievements_show_native_popup', false)
+        })
+}
+
+
+// payments
+function playgamaBridgePaymentsIsSupported() {
+    return serializeData(window.bridge.payments.isSupported)
+}
+
+function playgamaBridgePaymentsIsGetCatalogSupported() {
+    return serializeData(window.bridge.payments.isGetCatalogSupported)
+}
+
+function playgamaBridgePaymentsIsGetPurchasesSupported() {
+    return serializeData(window.bridge.payments.isGetPurchasesSupported)
+}
+
+function playgamaBridgePaymentsIsConsumePurchaseSupported() {
+    return serializeData(window.bridge.payments.isConsumePurchaseSupported)
+}
+
+function playgamaBridgePaymentsPurchase(options) {
+    try {
+        options = JSON.parse(options)
+    }
+    catch (e) {}
+
+    window.bridge.payments.purchase(options)
+        .then((data) => {
+            sendCallbackToGameMaker('payments_purchase', true, data)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('payments_purchase', false)
+        })
+}
+
+function playgamaBridgePaymentsConsumePurchase(options) {
+    try {
+        options = JSON.parse(options)
+    }
+    catch (e) {}
+
+    window.bridge.payments.consumePurchase(options)
+        .then(() => {
+            sendCallbackToGameMaker('payments_consume_purchase', true)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('payments_consume_purchase', false)
+        })
+}
+
+function playgamaBridgePaymentsGetCatalog() {
+    window.bridge.payments.getCatalog(options)
+        .then((data) => {
+            sendCallbackToGameMaker('payments_get_catalog', true, data)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('payments_get_catalog', false)
+        })
+}
+
+function playgamaBridgePaymentsGetPurchases() {
+    window.bridge.payments.getPurchases(options)
+        .then((data) => {
+            sendCallbackToGameMaker('payments_get_purchases', true, data)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('payments_get_purchases', false)
+        })
+}
+
+
+// remote config
+function playgamaBridgeRemoteConfigIsSupported() {
+    return serializeData(window.bridge.remoteConfig.isSupported)
+}
+
+function playgamaBridgeRemoteConfigGet(options) {
+    try {
+        options = JSON.parse(options)
+    }
+    catch (e) {}
+
+    window.bridge.remoteConfig.get(options)
+        .then((data) => {
+            sendCallbackToGameMaker('remote_config_get', true, data)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('remote_config_get', false)
         })
 }
 

@@ -115,3 +115,137 @@ function playgama_bridge_storage_delete_callback(success) {
 		// your logic
 	}
 }
+
+
+// player callbacks
+function playgama_bridge_player_authorize_callback(success) {
+	if success {
+		// your logic
+	}
+}
+
+
+// social callbacks
+function playgama_bridge_social_share_callback(success) {
+	if success {
+		// your logic
+	}
+}
+
+function playgama_bridge_social_join_community_callback(success) {
+	if success {
+		// your logic
+	}
+}
+
+function playgama_bridge_social_invite_friends_callback(success) {
+	if success {
+		// your logic
+	}
+}
+
+function playgama_bridge_social_create_post_callback(success) {
+	if success {
+		// your logic
+	}
+}
+
+function playgama_bridge_social_add_to_favorites_callback(success) {
+	if success {
+		// your logic
+	}
+}
+
+function playgama_bridge_social_add_to_home_screen_callback(success) {
+	if success {
+		// your logic
+	}
+}
+
+function playgama_bridge_social_rate_callback(success) {
+	if success {
+		// your logic
+	}
+}
+
+
+// leaderboard callbacks
+function playgama_bridge_leaderboard_set_score_callback(success) {
+	if success {
+		// your logic
+	}
+}
+
+function playgama_bridge_leaderboard_get_score_callback(success, data) {
+	if success {
+		// your logic
+	}
+}
+
+function playgama_bridge_leaderboard_get_entries_callback(success, data) {
+	if success {
+		var entries = json_parse(data)
+		// your logic
+	}
+}
+
+function playgama_bridge_leaderboard_show_native_popup_callback(success) {
+	if success {
+		// your logic
+	}
+}
+
+
+// achievements callbacks
+function playgama_bridge_achievements_unlock_callback(success) {
+	if success {
+		// your logic
+	}
+}
+
+function playgama_bridge_achievements_get_list_callback(success, data) {
+	if success {
+		var list = json_parse(data)
+		// your logic
+	}
+}
+
+function playgama_bridge_achievements_show_native_popup_callback(success) {
+	if success {
+		// your logic
+	}
+}
+
+
+// payments callbacks
+function playgama_bridge_payments_purchase_callback(success, data) {
+	if success {
+		// your logic
+	}
+}
+
+function playgama_bridge_payments_consume_purchase_callback(success) {
+	if success {
+		// your logic
+	}
+}
+
+function playgama_bridge_payments_get_catalog_callback(success, data) {
+	if success {
+		// your logic
+	}
+}
+
+function playgama_bridge_payments_get_purchases_callback(success, data) {
+	if success {
+		// your logic
+	}
+}
+
+
+// remote config callbacks
+function playgama_bridge_remote_config_get_callback(success, data) {
+	if success {
+		// your logic
+	}
+}

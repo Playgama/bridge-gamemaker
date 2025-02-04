@@ -99,3 +99,143 @@ if async_load[? "type"] == "playgama_bridge_storage_set_callback" {
 		// your logic here
 	}
 }
+
+if async_load[? "type"] == "playgama_bridge_storage_delete_callback" {
+	if async_load[? "success"] {
+		// your logic here
+	}
+}
+
+
+// player callbacks
+if async_load[? "type"] == "playgama_bridge_player_authorize_callback" {
+	if async_load[? "success"] {
+		// your logic
+	}
+}
+
+
+// social callbacks
+if async_load[? "type"] == "playgama_bridge_social_share_callback" {
+	if async_load[? "success"] {
+		// your logic
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_social_join_community_callback" {
+	if async_load[? "success"] {
+		// your logic
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_social_invite_friends_callback" {
+	if async_load[? "success"] {
+		// your logic
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_social_create_post_callback" {
+	if async_load[? "success"] {
+		// your logic
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_social_add_to_favorites_callback" {
+	if async_load[? "success"] {
+		// your logic
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_social_add_to_home_screen_callback" {
+	if async_load[? "success"] {
+		// your logic
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_social_rate_callback" {
+	if async_load[? "success"] {
+		// your logic
+	}
+}
+
+
+// leaderboard callbacks
+if async_load[? "type"] == "playgama_bridge_leaderboard_set_score_callback" {
+	if async_load[? "success"] {
+		// your logic
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_leaderboard_get_score_callback" {
+	if async_load[? "success"] {
+		// your logic
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_leaderboard_get_entries_callback" {
+	if async_load[? "success"] {
+		var entries = json_parse(data)
+		// your logic
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_leaderboard_show_native_popup_callback" {
+	if async_load[? "success"] {
+		// your logic
+	}
+}
+
+
+// achievements callbacks
+if async_load[? "type"] == "playgama_bridge_achievements_unlock_callback" {
+	if async_load[? "success"] {
+		// your logic
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_achievements_get_list_callback" {
+	if async_load[? "success"] {
+		var list = json_parse(data)
+		// your logic
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_achievements_show_native_popup_callback" {
+	if async_load[? "success"] {
+		// your logic
+	}
+}
+
+
+// payments callbacks
+if async_load[? "type"] == "playgama_bridge_payments_purchase_callback" {
+	if async_load[? "success"] {
+		// your logic
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_payments_consume_purchase_callback" {
+	if async_load[? "success"] {
+		// your logic
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_payments_get_catalog_callback" {
+	if async_load[? "success"] {
+		// your logic
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_payments_get_purchases_callback" {
+	if async_load[? "success"] {
+		// your logic
+	}
+}
+
+
+// remote config callbacks
+if async_load[? "type"] == "playgama_bridge_remote_config_get_callback" {
+	if async_load[? "success"] {
+		// your logic
+	}
+}
