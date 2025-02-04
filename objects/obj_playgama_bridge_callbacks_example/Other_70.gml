@@ -174,7 +174,6 @@ if async_load[? "type"] == "playgama_bridge_leaderboard_get_score_callback" {
 
 if async_load[? "type"] == "playgama_bridge_leaderboard_get_entries_callback" {
 	if async_load[? "success"] {
-		var entries = json_parse(data)
 		// your logic
 	}
 }
@@ -195,7 +194,6 @@ if async_load[? "type"] == "playgama_bridge_achievements_unlock_callback" {
 
 if async_load[? "type"] == "playgama_bridge_achievements_get_list_callback" {
 	if async_load[? "success"] {
-		var list = json_parse(data)
 		// your logic
 	}
 }
