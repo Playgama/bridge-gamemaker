@@ -55,9 +55,7 @@ function playgama_bridge_advertisement_banner_state_changed(data) {
 
 function playgama_bridge_advertisement_check_adblock_callback(success, data) {
 	if success {
-		if data {
-			// adblock detected
-		}
+		var is_adblock_detected = data
 	}
 }
 
@@ -78,7 +76,7 @@ function playgama_bridge_game_visibility_state_changed(data) {
 // platform callbacks
 function playgama_bridge_platform_get_server_time_callback(success, data) {
 	if success {
-		// your logic here
+		var server_time = data
 	}
 }
 
@@ -178,14 +176,13 @@ function playgama_bridge_leaderboard_set_score_callback(success) {
 
 function playgama_bridge_leaderboard_get_score_callback(success, data) {
 	if success {
-		// your logic
+		var score_value = data
 	}
 }
 
 function playgama_bridge_leaderboard_get_entries_callback(success, data) {
 	if success {
 		var entries = json_parse(data)
-		// your logic
 	}
 }
 
@@ -206,7 +203,6 @@ function playgama_bridge_achievements_unlock_callback(success) {
 function playgama_bridge_achievements_get_list_callback(success, data) {
 	if success {
 		var list = json_parse(data)
-		// your logic
 	}
 }
 
@@ -220,7 +216,7 @@ function playgama_bridge_achievements_show_native_popup_callback(success) {
 // payments callbacks
 function playgama_bridge_payments_purchase_callback(success, data) {
 	if success {
-		// your logic
+		var purchase = json_parse(data)
 	}
 }
 
@@ -232,13 +228,13 @@ function playgama_bridge_payments_consume_purchase_callback(success) {
 
 function playgama_bridge_payments_get_catalog_callback(success, data) {
 	if success {
-		// your logic
+		var catalog = json_parse(data)
 	}
 }
 
 function playgama_bridge_payments_get_purchases_callback(success, data) {
 	if success {
-		// your logic
+		var purchases = json_parse(data)
 	}
 }
 
@@ -246,6 +242,6 @@ function playgama_bridge_payments_get_purchases_callback(success, data) {
 // remote config callbacks
 function playgama_bridge_remote_config_get_callback(success, data) {
 	if success {
-		// your logic
+		var values = json_parse(data)
 	}
 }

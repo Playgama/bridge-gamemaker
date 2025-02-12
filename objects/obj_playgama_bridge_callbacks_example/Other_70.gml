@@ -55,9 +55,7 @@ if async_load[? "type"] == "playgama_bridge_advertisement_banner_state_changed" 
 
 if async_load[? "type"] == "playgama_bridge_advertisement_check_adblock_callback" {
 	if async_load[? "success"] {
-		if async_load[? "data"] {
-			// adblock detected
-		}
+		var is_adblock_detected = async_load[? "data"]
 	}
 }
 
@@ -78,9 +76,7 @@ if async_load[? "type"] == "playgama_bridge_game_visibility_state_changed" {
 // platform callbacks
 if async_load[? "type"] == "playgama_bridge_platform_get_server_time_callback" {
 	if async_load[? "success"] {
-		if async_load[? "data"] {
-			// your logic here
-		}
+		var server_time = async_load[? "data"]
 	}
 }
 
@@ -88,9 +84,7 @@ if async_load[? "type"] == "playgama_bridge_platform_get_server_time_callback" {
 // storage callbacks
 if async_load[? "type"] == "playgama_bridge_storage_get_callback" {
 	if async_load[? "success"] {
-		if async_load[? "data"] {
-			// your logic here
-		}
+		var data = json_parse(async_load[? "data"])
 	}
 }
 
@@ -168,13 +162,13 @@ if async_load[? "type"] == "playgama_bridge_leaderboard_set_score_callback" {
 
 if async_load[? "type"] == "playgama_bridge_leaderboard_get_score_callback" {
 	if async_load[? "success"] {
-		// your logic
+		var score_value = async_load[? "data"]
 	}
 }
 
 if async_load[? "type"] == "playgama_bridge_leaderboard_get_entries_callback" {
 	if async_load[? "success"] {
-		// your logic
+		var entries = json_parse(async_load[? "data"])
 	}
 }
 
@@ -194,7 +188,7 @@ if async_load[? "type"] == "playgama_bridge_achievements_unlock_callback" {
 
 if async_load[? "type"] == "playgama_bridge_achievements_get_list_callback" {
 	if async_load[? "success"] {
-		// your logic
+		var list = json_parse(async_load[? "data"])
 	}
 }
 
@@ -208,7 +202,7 @@ if async_load[? "type"] == "playgama_bridge_achievements_show_native_popup_callb
 // payments callbacks
 if async_load[? "type"] == "playgama_bridge_payments_purchase_callback" {
 	if async_load[? "success"] {
-		// your logic
+		var purchase = json_parse(async_load[? "data"])
 	}
 }
 
@@ -220,13 +214,13 @@ if async_load[? "type"] == "playgama_bridge_payments_consume_purchase_callback" 
 
 if async_load[? "type"] == "playgama_bridge_payments_get_catalog_callback" {
 	if async_load[? "success"] {
-		// your logic
+		var catalog = json_parse(async_load[? "data"])
 	}
 }
 
 if async_load[? "type"] == "playgama_bridge_payments_get_purchases_callback" {
 	if async_load[? "success"] {
-		// your logic
+		var purchases = json_parse(async_load[? "data"])
 	}
 }
 
@@ -234,6 +228,6 @@ if async_load[? "type"] == "playgama_bridge_payments_get_purchases_callback" {
 // remote config callbacks
 if async_load[? "type"] == "playgama_bridge_remote_config_get_callback" {
 	if async_load[? "success"] {
-		// your logic
+		var values = json_parse(async_load[? "data"])
 	}
 }
