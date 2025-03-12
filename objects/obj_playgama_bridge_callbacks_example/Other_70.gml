@@ -80,6 +80,18 @@ if async_load[? "type"] == "playgama_bridge_platform_get_server_time_callback" {
 	}
 }
 
+if async_load[? "type"] == "playgama_bridge_platform_get_all_games_callback" {
+	if async_load[? "success"] {
+		var all_games = json_parse(async_load[? "data"])
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_platform_get_game_by_id_callback" {
+	if async_load[? "success"] {
+		var game = json_parse(async_load[? "data"])
+	}
+}
+
 
 // storage callbacks
 if async_load[? "type"] == "playgama_bridge_storage_get_callback" {

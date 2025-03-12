@@ -80,6 +80,18 @@ function playgama_bridge_platform_get_server_time_callback(success, data) {
 	}
 }
 
+function playgama_bridge_platform_get_all_games_callback(success, data) {
+	if success {
+		var games = json_parse(data)
+	}
+}
+
+function playgama_bridge_platform_get_game_by_id_callback(success, data) {
+	if success {
+		var game = json_parse(data)
+	}
+}
+
 
 // storage callbacks
 function playgama_bridge_storage_get_callback(success, data) {

@@ -107,6 +107,39 @@ function playgamaBridgePlatformGetServerTime() {
         })
 }
 
+function playgamaBridgePlatformIsGetAllGamesSupported() {
+    return serializeData(window.bridge.platform.isGetAllGamesSupported)
+}
+
+function playgamaBridgePlatformIsGetGameByIdSupported() {
+    return serializeData(window.bridge.platform.isGetGameByIdSupported)
+}
+
+function playgamaBridgePlatformGetAllGames() {
+    window.bridge.platform.getAllGames()
+        .then((data) => {
+            sendCallbackToGameMaker('platform_get_all_games', true, data)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('platform_get_all_games', false)
+        })
+}
+
+function playgamaBridgePlatformGetGameById(options) {
+    try {
+        options = JSON.parse(options)
+    }
+    catch (e) {}
+
+    window.bridge.platform.getGameById(options)
+        .then((data) => {
+            sendCallbackToGameMaker('platform_get_game_by_id', true, data)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('platform_get_game_by_id', false)
+        })
+}
+
 
 // game
 function playgamaBridgeGameVisibilityState() {
