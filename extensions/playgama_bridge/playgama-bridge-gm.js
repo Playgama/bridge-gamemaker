@@ -524,6 +524,10 @@ function playgamaBridgePaymentsIsSupported() {
     return serializeData(window.bridge.payments.isSupported)
 }
 
+function playgamaBridgePaymentsIsAvailable() {
+    return serializeData(window.bridge.payments.isAvailable)
+}
+
 function playgamaBridgePaymentsIsGetCatalogSupported() {
     return serializeData(window.bridge.payments.isGetCatalogSupported)
 }
