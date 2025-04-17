@@ -80,6 +80,18 @@ function playgama_bridge_platform_get_server_time_callback(success, data) {
 	}
 }
 
+function playgama_bridge_platform_get_all_games_callback(success, data) {
+	if success {
+		var games = json_parse(data)
+	}
+}
+
+function playgama_bridge_platform_get_game_by_id_callback(success, data) {
+	if success {
+		var game = json_parse(data)
+	}
+}
+
 
 // storage callbacks
 function playgama_bridge_storage_get_callback(success, data) {
@@ -217,6 +229,7 @@ function playgama_bridge_achievements_show_native_popup_callback(success) {
 function playgama_bridge_payments_purchase_callback(success, data) {
 	if success {
 		var purchase = json_parse(data)
+		var commonId = purchase.commonId
 	}
 }
 
@@ -229,12 +242,23 @@ function playgama_bridge_payments_consume_purchase_callback(success) {
 function playgama_bridge_payments_get_catalog_callback(success, data) {
 	if success {
 		var catalog = json_parse(data)
+		for (var i = 0; i < array_length(catalog); i += 1)
+		{
+		    var commonId = catalog[i].commonId
+			var price = catalog[i].price
+			var priceCurrencyCode = catalog[i].priceCurrencyCode
+			var priceValue = catalog[i].priceValue
+		}
 	}
 }
 
 function playgama_bridge_payments_get_purchases_callback(success, data) {
 	if success {
 		var purchases = json_parse(data)
+		for (var i = 0; i < array_length(purchases); i += 1)
+		{
+		    var commonId = purchases[i].commonId
+		}
 	}
 }
 

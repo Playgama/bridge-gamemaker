@@ -107,6 +107,39 @@ function playgamaBridgePlatformGetServerTime() {
         })
 }
 
+function playgamaBridgePlatformIsGetAllGamesSupported() {
+    return serializeData(window.bridge.platform.isGetAllGamesSupported)
+}
+
+function playgamaBridgePlatformIsGetGameByIdSupported() {
+    return serializeData(window.bridge.platform.isGetGameByIdSupported)
+}
+
+function playgamaBridgePlatformGetAllGames() {
+    window.bridge.platform.getAllGames()
+        .then((data) => {
+            sendCallbackToGameMaker('platform_get_all_games', true, data)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('platform_get_all_games', false)
+        })
+}
+
+function playgamaBridgePlatformGetGameById(options) {
+    try {
+        options = JSON.parse(options)
+    }
+    catch (e) {}
+
+    window.bridge.platform.getGameById(options)
+        .then((data) => {
+            sendCallbackToGameMaker('platform_get_game_by_id', true, data)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('platform_get_game_by_id', false)
+        })
+}
+
 
 // game
 function playgamaBridgeGameVisibilityState() {
@@ -491,25 +524,8 @@ function playgamaBridgePaymentsIsSupported() {
     return serializeData(window.bridge.payments.isSupported)
 }
 
-function playgamaBridgePaymentsIsGetCatalogSupported() {
-    return serializeData(window.bridge.payments.isGetCatalogSupported)
-}
-
-function playgamaBridgePaymentsIsGetPurchasesSupported() {
-    return serializeData(window.bridge.payments.isGetPurchasesSupported)
-}
-
-function playgamaBridgePaymentsIsConsumePurchaseSupported() {
-    return serializeData(window.bridge.payments.isConsumePurchaseSupported)
-}
-
-function playgamaBridgePaymentsPurchase(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
-
-    window.bridge.payments.purchase(options)
+function playgamaBridgePaymentsPurchase(id) {
+    window.bridge.payments.purchase(id)
         .then((data) => {
             sendCallbackToGameMaker('payments_purchase', true, data)
         })
@@ -518,13 +534,8 @@ function playgamaBridgePaymentsPurchase(options) {
         })
 }
 
-function playgamaBridgePaymentsConsumePurchase(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
-
-    window.bridge.payments.consumePurchase(options)
+function playgamaBridgePaymentsConsumePurchase(id) {
+    window.bridge.payments.consumePurchase(id)
         .then(() => {
             sendCallbackToGameMaker('payments_consume_purchase', true)
         })
@@ -534,7 +545,7 @@ function playgamaBridgePaymentsConsumePurchase(options) {
 }
 
 function playgamaBridgePaymentsGetCatalog() {
-    window.bridge.payments.getCatalog(options)
+    window.bridge.payments.getCatalog()
         .then((data) => {
             sendCallbackToGameMaker('payments_get_catalog', true, data)
         })
@@ -544,7 +555,7 @@ function playgamaBridgePaymentsGetCatalog() {
 }
 
 function playgamaBridgePaymentsGetPurchases() {
-    window.bridge.payments.getPurchases(options)
+    window.bridge.payments.getPurchases()
         .then((data) => {
             sendCallbackToGameMaker('payments_get_purchases', true, data)
         })

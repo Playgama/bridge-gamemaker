@@ -109,7 +109,7 @@
         ${GM_HTML5_InjectRunnerPath}
 
         <script>
-            bridge.initialize(window.bridgeOptions)
+            bridge.initialize({ configFilePath: './html5game/playgama-bridge-config.json' })
                 .then(() => {
                     GameMaker_Init()
                 })

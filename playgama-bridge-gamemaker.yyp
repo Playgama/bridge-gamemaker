@@ -29,6 +29,7 @@
     {"$GMFolder":"","%Name":"Timelines","folderPath":"folders/Timelines.yy","name":"Timelines","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
   "IncludedFiles":[
+    {"$GMIncludedFile":"","%Name":"playgama-bridge-config.json","CopyToMask":-1,"filePath":"datafiles","name":"playgama-bridge-config.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"playgama-bridge-index.html","CopyToMask":32,"filePath":"datafiles","name":"playgama-bridge-index.html","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"playgama-bridge.js","CopyToMask":-1,"filePath":"datafiles","name":"playgama-bridge.js","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
   ],
