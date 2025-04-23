@@ -215,12 +215,15 @@ if async_load[? "type"] == "playgama_bridge_achievements_show_native_popup_callb
 if async_load[? "type"] == "playgama_bridge_payments_purchase_callback" {
 	if async_load[? "success"] {
 		var purchase = json_parse(async_load[? "data"])
-		var commonId = purchase.commonId
+		var productId = purchase.id
+		// your logic
 	}
 }
 
 if async_load[? "type"] == "playgama_bridge_payments_consume_purchase_callback" {
 	if async_load[? "success"] {
+		var purchase = json_parse(async_load[? "data"])
+		var productId = purchase.id
 		// your logic
 	}
 }
@@ -230,7 +233,7 @@ if async_load[? "type"] == "playgama_bridge_payments_get_catalog_callback" {
 		var catalog = json_parse(async_load[? "data"])
 		for (var i = 0; i < array_length(catalog); i += 1)
 		{
-		    var commonId = catalog[i].commonId
+		    var productId = catalog[i].id
 			var price = catalog[i].price
 			var priceCurrencyCode = catalog[i].priceCurrencyCode
 			var priceValue = catalog[i].priceValue
@@ -243,7 +246,7 @@ if async_load[? "type"] == "playgama_bridge_payments_get_purchases_callback" {
 		var purchases = json_parse(async_load[? "data"])
 		for (var i = 0; i < array_length(purchases); i += 1)
 		{
-		    var commonId = purchases[i].commonId
+		    var productId = purchases[i].id
 		}
 	}
 }

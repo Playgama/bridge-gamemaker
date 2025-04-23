@@ -536,8 +536,8 @@ function playgamaBridgePaymentsPurchase(id) {
 
 function playgamaBridgePaymentsConsumePurchase(id) {
     window.bridge.payments.consumePurchase(id)
-        .then(() => {
-            sendCallbackToGameMaker('payments_consume_purchase', true)
+        .then((data) => {
+            sendCallbackToGameMaker('payments_consume_purchase', true, data)
         })
         .catch(() => {
             sendCallbackToGameMaker('payments_consume_purchase', false)
