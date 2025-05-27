@@ -24,12 +24,12 @@ bridge.game.on(
 
 
 // advertisement
-function playgamaBridgeAdvertisementShowInterstitial() {
-    window.bridge.advertisement.showInterstitial()
+function playgamaBridgeAdvertisementShowInterstitial(placement) {
+    window.bridge.advertisement.showInterstitial(placement)
 }
 
-function playgamaBridgeAdvertisementShowRewarded() {
-    window.bridge.advertisement.showRewarded()
+function playgamaBridgeAdvertisementShowRewarded(placement) {
+    window.bridge.advertisement.showRewarded(placement)
 }
 
 function playgamaBridgeAdvertisementInterstitialState() {
@@ -38,6 +38,10 @@ function playgamaBridgeAdvertisementInterstitialState() {
 
 function playgamaBridgeAdvertisementRewardedState() {
     return window.bridge.advertisement.rewardedState
+}
+
+function playgamaBridgeAdvertisementRewardedPlacement() {
+    return window.bridge.advertisement.rewardedPlacement
 }
 
 function playgamaBridgeAdvertisementIsBannerSupported() {
@@ -52,13 +56,8 @@ function playgamaBridgeAdvertisementSetMinimumDelayBetweenInterstitial(value) {
     window.bridge.advertisement.setMinimumDelayBetweenInterstitial(value)
 }
 
-function playgamaBridgeAdvertisementShowBanner(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
-
-    window.bridge.advertisement.showBanner(options)
+function playgamaBridgeAdvertisementShowBanner(position, placement) {
+    window.bridge.advertisement.showBanner(position, placement)
 }
 
 function playgamaBridgeAdvertisementHideBanner() {
