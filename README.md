@@ -2,12 +2,11 @@
 One SDK for cross-platform publishing HTML5 games.
 
 ## Supported platforms
-+ [Playgama](https://playgama.com)
++ [Playgama](https://playgama.com/?utm_source=github&utm_medium=bridge)
 + [Game Distribution](https://gamedistribution.com)
 + [Crazy Games](https://crazygames.com)
 + [Yandex Games](https://yandex.com/games)
 + [Y8](https://y8.com)
-+ [Wortal](https://wortal.ai)
 + [PlayDeck](https://playdeck.io)
 + [Telegram](https://core.telegram.org/bots/webapps)
 + [VK](https://vk.com)
@@ -30,6 +29,6 @@ One SDK for cross-platform publishing HTML5 games.
 + [GDevelop](https://github.com/playgama/bridge-gdevelop)
 
 ## Useful links
-+ [Documentation](https://wiki.playgama.com/)
++ [Documentation](https://wiki.playgama.com/?utm_source=github&utm_medium=bridge)
 + [Discord](https://discord.gg/pzqd2upxr8)
-+ [Game Publishing](https://developer.playgama.com/)
++ [Game Publishing](https://developer.playgama.com/?utm_source=github&utm_medium=bridge)
