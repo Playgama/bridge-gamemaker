@@ -165,28 +165,16 @@ if async_load[? "type"] == "playgama_bridge_social_rate_callback" {
 }
 
 
-// leaderboard callbacks
-if async_load[? "type"] == "playgama_bridge_leaderboard_set_score_callback" {
+// leaderboards callbacks
+if async_load[? "type"] == "playgama_bridge_leaderboards_set_score_callback" {
 	if async_load[? "success"] {
 		// your logic
 	}
 }
 
-if async_load[? "type"] == "playgama_bridge_leaderboard_get_score_callback" {
-	if async_load[? "success"] {
-		var score_value = async_load[? "data"]
-	}
-}
-
-if async_load[? "type"] == "playgama_bridge_leaderboard_get_entries_callback" {
+if async_load[? "type"] == "playgama_bridge_leaderboards_get_entries_callback" {
 	if async_load[? "success"] {
 		var entries = json_parse(async_load[? "data"])
-	}
-}
-
-if async_load[? "type"] == "playgama_bridge_leaderboard_show_native_popup_callback" {
-	if async_load[? "success"] {
-		// your logic
 	}
 }
 
