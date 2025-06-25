@@ -373,88 +373,28 @@ function playgamaBridgeSocialIsExternalLinksAllowed() {
 }
 
 
-// leaderboard
-function playgamaBridgeLeaderboardIsSupported() {
-    return serializeData(window.bridge.leaderboard.isSupported)
+// leaderboards
+function playgamaBridgeLeaderboardsType() {
+    return serializeData(window.bridge.leaderboards.type)
 }
 
-function playgamaBridgeLeaderboardIsNativePopupSupported() {
-    return serializeData(window.bridge.leaderboard.isNativePopupSupported)
-}
-
-function playgamaBridgeLeaderboardIsMultipleBoardsSupported() {
-    return serializeData(window.bridge.leaderboard.isMultipleBoardsSupported)
-}
-
-function playgamaBridgeLeaderboardIsSetScoreSupported() {
-    return serializeData(window.bridge.leaderboard.isSetScoreSupported)
-}
-
-function playgamaBridgeLeaderboardIsGetScoreSupported() {
-    return serializeData(window.bridge.leaderboard.isGetScoreSupported)
-}
-
-function playgamaBridgeLeaderboardIsGetEntriesSupported() {
-    return serializeData(window.bridge.leaderboard.isGetEntriesSupported)
-}
-
-function playgamaBridgeLeaderboardSetScore(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
-
-    window.bridge.leaderboard.setScore(options)
+function playgamaBridgeLeaderboardsSetScore(id, score) {
+    window.bridge.leaderboards.setScore(id, score)
         .then(() => {
-            sendCallbackToGameMaker('leaderboard_set_score', true)
+            sendCallbackToGameMaker('leaderboards_set_score', true)
         })
         .catch(() => {
-            sendCallbackToGameMaker('leaderboard_set_score', false)
+            sendCallbackToGameMaker('leaderboards_set_score', false)
         })
 }
 
-function playgamaBridgeLeaderboardGetScore(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
-
-    window.bridge.leaderboard.getScore(options)
+function playgamaBridgeLeaderboardsGetEntries(id) {
+    window.bridge.leaderboards.getEntries(id)
         .then((data) => {
-            sendCallbackToGameMaker('leaderboard_get_score', true, data)
+            sendCallbackToGameMaker('leaderboards_get_entries', true, data)
         })
         .catch(() => {
-            sendCallbackToGameMaker('leaderboard_get_score', false)
-        })
-}
-
-function playgamaBridgeLeaderboardGetEntries(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
-
-    window.bridge.leaderboard.getEntries(options)
-        .then((data) => {
-            sendCallbackToGameMaker('leaderboard_get_entries', true, data)
-        })
-        .catch(() => {
-            sendCallbackToGameMaker('leaderboard_get_entries', false)
-        })
-}
-
-function playgamaBridgeLeaderboardShowNativePopup(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
-
-    window.bridge.leaderboard.showNativePopup(options)
-        .then(() => {
-            sendCallbackToGameMaker('leaderboard_show_native_popup', true)
-        })
-        .catch(() => {
-            sendCallbackToGameMaker('leaderboard_show_native_popup', false)
+            sendCallbackToGameMaker('leaderboards_get_entries', false)
         })
 }
 
@@ -588,29 +528,13 @@ function playgamaBridgeRemoteConfigGet(options) {
 // utils
 function sendStateToGameMaker(type, state) {
     let serializedState = this.serializeData(state)
-    callGameMakerSpecifiedStateCallbackFunction(type, serializedState)
     sendSocialEventStateToGameMaker(type, serializedState)
 }
 
 function sendCallbackToGameMaker(type, success, data) {
     let serializedData = serializeData(data)
     let serializedSuccess = serializeData(success)
-    callGameMakerSpecifiedCallbackFunction(type, serializedSuccess, serializedData)
     sendSocialEventCallbackToGameMaker(type, serializedSuccess, serializedData)
-}
-
-function callGameMakerSpecifiedCallbackFunction(type, success, data) {
-    let formattedType = formatSpecifiedCallbackType(type)
-    if (window[`gml_Script_${formattedType}`]) {
-        window[`gml_Script_${formattedType}`](null, null, success, data)
-    }
-}
-
-function callGameMakerSpecifiedStateCallbackFunction(type, data) {
-    let formattedType = formatSpecifiedStateCallbackType(type)
-    if (window[`gml_Script_${formattedType}`]) {
-        window[`gml_Script_${formattedType}`](null, null, data)
-    }
 }
 
 function sendSocialEventCallbackToGameMaker(type, success, data = null) {
