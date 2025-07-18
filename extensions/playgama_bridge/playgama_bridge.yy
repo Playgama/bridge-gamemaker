@@ -84,6 +84,8 @@
         {"$GMExtensionFunction":"","%Name":"playgama_bridge_platform_get_all_games","argCount":0,"args":[],"documentation":"","externalName":"playgamaBridgePlatformGetAllGames","help":"playgama_bridge_platform_get_all_games()","hidden":false,"kind":5,"name":"playgama_bridge_platform_get_all_games","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":1,},
         {"$GMExtensionFunction":"","%Name":"playgama_bridge_platform_get_game_by_id","argCount":0,"args":[1,],"documentation":"","externalName":"playgamaBridgePlatformGetGameById","help":"playgama_bridge_platform_get_game_by_id(options)","hidden":false,"kind":5,"name":"playgama_bridge_platform_get_game_by_id","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":1,},
         {"$GMExtensionFunction":"","%Name":"playgama_bridge_advertisement_rewarded_placement","argCount":0,"args":[],"documentation":"","externalName":"playgamaBridgeAdvertisementRewardedPlacement","help":"playgama_bridge_advertisement_rewarded_placement()","hidden":false,"kind":5,"name":"playgama_bridge_advertisement_rewarded_placement","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":1,},
+        {"$GMExtensionFunction":"","%Name":"playgama_bridge_advertisement_is_interstitial_supported","argCount":0,"args":[],"documentation":"","externalName":"playgamaBridgeAdvertisementIsInterstitialSupported","help":"playgama_bridge_advertisement_is_interstitial_supported()","hidden":false,"kind":5,"name":"playgama_bridge_advertisement_is_interstitial_supported","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
+        {"$GMExtensionFunction":"","%Name":"playgama_bridge_advertisement_is_rewarded_supported","argCount":0,"args":[],"documentation":"","externalName":"playgamaBridgeAdvertisementIsRewardedSupported","help":"playgama_bridge_advertisement_is_rewarded_supported()","hidden":false,"kind":5,"name":"playgama_bridge_advertisement_is_rewarded_supported","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
       ],"init":"","kind":5,"name":"","order":[
         {"name":"playgama_bridge_advertisement_show_interstitial","path":"extensions/playgama_bridge/playgama_bridge.yy",},
         {"name":"playgama_bridge_advertisement_show_rewarded","path":"extensions/playgama_bridge/playgama_bridge.yy",},
@@ -97,6 +99,8 @@
         {"name":"playgama_bridge_advertisement_show_banner","path":"extensions/playgama_bridge/playgama_bridge.yy",},
         {"name":"playgama_bridge_advertisement_hide_banner","path":"extensions/playgama_bridge/playgama_bridge.yy",},
         {"name":"playgama_bridge_advertisement_banner_state","path":"extensions/playgama_bridge/playgama_bridge.yy",},
+        {"name":"playgama_bridge_advertisement_is_rewarded_supported","path":"extensions/playgama_bridge/playgama_bridge.yy",},
+        {"name":"playgama_bridge_advertisement_is_interstitial_supported","path":"extensions/playgama_bridge/playgama_bridge.yy",},
         {"name":"playgama_bridge_platform_id","path":"extensions/playgama_bridge/playgama_bridge.yy",},
         {"name":"playgama_bridge_platform_language","path":"extensions/playgama_bridge/playgama_bridge.yy",},
         {"name":"playgama_bridge_platform_payload","path":"extensions/playgama_bridge/playgama_bridge.yy",},

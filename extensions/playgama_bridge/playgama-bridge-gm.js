@@ -48,6 +48,14 @@ function playgamaBridgeAdvertisementIsBannerSupported() {
     return serializeData(window.bridge.advertisement.isBannerSupported)
 }
 
+function playgamaBridgeAdvertisementIsInterstitialSupported() {
+    return serializeData(window.bridge.advertisement.isInterstitialSupported)
+}
+
+function playgamaBridgeAdvertisementIsRewardedSupported() {
+    return serializeData(window.bridge.advertisement.isRewardedSupported)
+}
+
 function playgamaBridgeAdvertisementMinimumDelayBetweenInterstitial() {
     return window.bridge.advertisement.minimumDelayBetweenInterstitial
 }
