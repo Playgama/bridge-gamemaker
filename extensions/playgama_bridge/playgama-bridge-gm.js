@@ -22,6 +22,18 @@ bridge.game.on(
         sendStateToGameMaker('game_visibility_state', state)
     })
 
+bridge.platform.on(
+    bridge.EVENT_NAME.AUDIO_STATE_CHANGED,
+    (isEnabled) => {
+        sendStateToGameMaker('platform_audio_state', isEnabled)
+    })
+
+bridge.platform.on(
+    bridge.EVENT_NAME.PAUSE_STATE_CHANGED,
+    (isPaused) => {
+        sendStateToGameMaker('platform_pause_state', isPaused)
+    })
+
 
 // advertisement
 function playgamaBridgeAdvertisementShowInterstitial(placement) {
@@ -102,6 +114,10 @@ function playgamaBridgePlatformTld() {
 
 function playgamaBridgePlatformSendMessage(message) {
     window.bridge.platform.sendMessage(message)
+}
+
+function playgamaBridgePlatformIsAudioEnabled() {
+    return serializeData(window.bridge.platform.isAudioEnabled)
 }
 
 function playgamaBridgePlatformGetServerTime() {

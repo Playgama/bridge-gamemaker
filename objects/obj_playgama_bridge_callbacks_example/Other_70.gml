@@ -74,6 +74,18 @@ if async_load[? "type"] == "playgama_bridge_game_visibility_state_changed" {
 
 
 // platform callbacks
+if async_load[? "type"] == "playgama_bridge_platform_audio_state_changed" {
+	if async_load[? "data"] {
+		// audio is enabled
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_platform_pause_state_changed" {
+	if async_load[? "data"] {
+		// is paused
+	}
+}
+
 if async_load[? "type"] == "playgama_bridge_platform_get_server_time_callback" {
 	if async_load[? "success"] {
 		var server_time = async_load[? "data"]
