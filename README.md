@@ -17,6 +17,7 @@ One SDK for cross-platform publishing HTML5 games.
 + [Poki](https://poki.com/)
 + [MSN](https://www.msn.com/en-us/play)
 + [Discord](https://discord.com/gaming)
++ [BitQuest](https://t.me/BitquestGamesBot/start)
 + Other [Work In Progress]
 
 ## Plugins for game engines
