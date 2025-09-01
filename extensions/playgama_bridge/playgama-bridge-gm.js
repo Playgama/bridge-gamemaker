@@ -422,6 +422,16 @@ function playgamaBridgeLeaderboardsGetEntries(id) {
         })
 }
 
+function playgamaBridgeLeaderboardsShowNativePopup(id) {
+    window.bridge.leaderboards.showNativePopup(id)
+        .then(() => {
+            sendCallbackToGameMaker('leaderboards_show_native_popup', true)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('leaderboards_show_native_popup', false)
+        })
+}
+
 
 // achievements
 function playgamaBridgeAchievementsIsSupported() {

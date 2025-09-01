@@ -190,6 +190,12 @@ if async_load[? "type"] == "playgama_bridge_leaderboards_get_entries_callback" {
 	}
 }
 
+if async_load[? "type"] == "playgama_bridge_leaderboards_show_native_popup_callback" {
+	if async_load[? "success"] {
+		// your logic
+	}
+}
+
 
 // achievements callbacks
 if async_load[? "type"] == "playgama_bridge_achievements_unlock_callback" {
