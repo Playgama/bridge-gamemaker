@@ -253,6 +253,10 @@ function playgamaBridgePlayerName() {
     return serializeData(window.bridge.player.name)
 }
 
+function playgamaBridgePlayerExtra() {
+    return serializeData(window.bridge.player.extra)
+}
+
 function playgamaBridgePlayerPhotos() {
     return serializeData(window.bridge.player.photos)
 }
