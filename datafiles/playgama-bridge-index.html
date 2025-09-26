@@ -47,7 +47,7 @@
                 width: 100%;
                 height: 100%;
             }
-            
+
             /* Custom Runner Styles */
             div.gm4html5_div_class {
                 margin: 0px;
@@ -73,7 +73,7 @@
                 text-align: center;
             }
             /* END - Custom Runner Styles */
-            
+
         </style>
 
         <!-- Custom PostStyle code is injected here -->
@@ -81,7 +81,6 @@
 
         <!-- Builtin injector for injecting flurry analytics code -->
         ${GM_HTML5_InjectFlurryAnalytics}
-        <script type="text/javascript" src="./html5game/playgama-bridge.js"></script>
     </head>
 
     <!-- Custom PostHead code is injected here -->
@@ -92,7 +91,7 @@
 
     <body>
         <div class="gm4html5_div_class" id="gm4html5_div_id">
-            
+
             <!-- Builtin injector for splash screen -->
             ${GM_HTML5_InjectSplashScreen}
 
@@ -109,12 +108,24 @@
         ${GM_HTML5_InjectRunnerPath}
 
         <script>
-            bridge.engine = 'gamemaker'
-            bridge.initialize({ configFilePath: './html5game/playgama-bridge-config.json' })
-                .then(() => {
-                    GameMaker_Init()
-                })
+            function addLocalBridge() {
+                const scriptElement = document.createElement('script')
+                scriptElement.src = './html5game/playgama-bridge.js'
+                document.body.appendChild(scriptElement)
+                scriptElement.onload = function() {
+                    initializeBridge()
+                }
+            }
+
+            function initializeBridge() {
+                bridge.engine = 'gamemaker'
+                bridge.initialize({ configFilePath: './html5game/playgama-bridge-config.json' })
+                    .then(() => {
+                        GameMaker_Init()
+                    })
+            }
         </script>
+        <script src="https://bridge.playgama.com/v1/stable/playgama-bridge.js" onload="initializeBridge()" onerror="addLocalBridge()"></script>
 
         <!-- Builtin injector for injecting google analytics code -->
         ${GM_HTML5_InjectGoogleAnalytics}
