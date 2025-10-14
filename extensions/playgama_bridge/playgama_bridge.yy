@@ -14,7 +14,7 @@
   "copyToTargets":17179869216,
   "description":"",
   "exportToGame":true,
-  "extensionVersion":"1.25.0",
+  "extensionVersion":"1.26.0",
   "files":[
     {"$GMExtensionFile":"","%Name":"","constants":[],"copyToTargets":17179869216,"filename":"playgama-bridge-gm.js","final":"","functions":[
         {"$GMExtensionFunction":"","%Name":"playgama_bridge_advertisement_show_interstitial","argCount":0,"args":[1,],"documentation":"","externalName":"playgamaBridgeAdvertisementShowInterstitial","help":"playgama_bridge_advertisement_show_interstitial(placement)","hidden":false,"kind":5,"name":"playgama_bridge_advertisement_show_interstitial","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":1,},
