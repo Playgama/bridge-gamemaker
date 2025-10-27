@@ -108,7 +108,22 @@
         ${GM_HTML5_InjectRunnerPath}
 
         <script>
+            let bridgeScript = null
+            let bridgeTimeout = null
+            let bridgeLoaded = false
+            
             function addLocalBridge() {
+                if (bridgeLoaded) return
+                bridgeLoaded = true
+                clearTimeout(bridgeTimeout)
+
+                if (bridgeScript && bridgeScript.parentNode) {
+                    bridgeScript.onload = null
+                    bridgeScript.onerror = null
+                    bridgeScript.src = ''
+                    bridgeScript.parentNode.removeChild(bridgeScript)
+                }
+
                 const scriptElement = document.createElement('script')
                 scriptElement.src = './html5game/playgama-bridge.js'
                 document.body.appendChild(scriptElement)
@@ -117,7 +132,20 @@
                 }
             }
 
+            bridgeScript = document.createElement('script')
+            bridgeScript.src = 'https://bridge.playgama.com/v1/stable/playgama-bridge.js'
+            bridgeScript.onload = initializeBridge
+            bridgeScript.onerror = addLocalBridge
+
+            bridgeTimeout = setTimeout(() => {
+                console.warn('CDN bridge failed to load within 2 seconds, loading local bridge')
+                addLocalBridge()
+            }, 2000)
+
+            document.head.appendChild(bridgeScript)
+
             function initializeBridge() {
+                clearTimeout(bridgeTimeout)
                 bridge.engine = 'gamemaker'
                 bridge.initialize({ configFilePath: './html5game/playgama-bridge-config.json' })
                     .then(() => {
@@ -125,7 +153,6 @@
                     })
             }
         </script>
-        <script src="https://bridge.playgama.com/v1/stable/playgama-bridge.js" onload="initializeBridge()" onerror="addLocalBridge()"></script>
 
         <!-- Builtin injector for injecting google analytics code -->
         ${GM_HTML5_InjectGoogleAnalytics}
