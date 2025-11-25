@@ -501,8 +501,13 @@ function playgamaBridgePaymentsIsSupported() {
     return serializeData(window.bridge.payments.isSupported)
 }
 
-function playgamaBridgePaymentsPurchase(id) {
-    window.bridge.payments.purchase(id)
+function playgamaBridgePaymentsPurchase(id, options) {
+    try {
+        options = JSON.parse(options)
+    }
+    catch (e) {}
+
+    window.bridge.payments.purchase(id, options)
         .then((data) => {
             sendCallbackToGameMaker('payments_purchase', true, data)
         })
