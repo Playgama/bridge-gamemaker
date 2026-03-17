@@ -112,8 +112,10 @@ function playgamaBridgePlatformTld() {
     return serializeData(window.bridge.platform.tld)
 }
 
-function playgamaBridgePlatformSendMessage(message) {
-    window.bridge.platform.sendMessage(message)
+function playgamaBridgePlatformSendMessage(message, options) {
+    var parsed = {}
+    try { parsed = JSON.parse(options) } catch (e) {}
+    window.bridge.platform.sendMessage(message, parsed)
 }
 
 function playgamaBridgePlatformIsAudioEnabled() {
