@@ -16,6 +16,12 @@ bridge.advertisement.on(
         sendStateToGameMaker('advertisement_banner_state', state)
     })
 
+bridge.advertisement.on(
+    bridge.EVENT_NAME.ADVANCED_BANNERS_STATE_CHANGED,
+    (state) => {
+        sendStateToGameMaker('advertisement_advanced_banners_state', state)
+    })
+
 bridge.game.on(
     bridge.EVENT_NAME.VISIBILITY_STATE_CHANGED,
     (state) => {
@@ -82,6 +88,22 @@ function playgamaBridgeAdvertisementShowBanner(position, placement) {
 
 function playgamaBridgeAdvertisementHideBanner() {
     window.bridge.advertisement.hideBanner()
+}
+
+function playgamaBridgeAdvertisementIsAdvancedBannersSupported() {
+    return serializeData(window.bridge.advertisement.isAdvancedBannersSupported)
+}
+
+function playgamaBridgeAdvertisementAdvancedBannersState() {
+    return window.bridge.advertisement.advancedBannersState
+}
+
+function playgamaBridgeAdvertisementShowAdvancedBanners(placement) {
+    window.bridge.advertisement.showAdvancedBanners(placement)
+}
+
+function playgamaBridgeAdvertisementHideAdvancedBanners() {
+    window.bridge.advertisement.hideAdvancedBanners()
 }
 
 function playgamaBridgeAdvertisementCheckAdblock() {
