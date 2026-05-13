@@ -201,26 +201,14 @@ function playgamaBridgeGameVisibilityState() {
 
 
 // storage
-function playgamaBridgeStorageDefaultType() {
-    return window.bridge.storage.defaultType
-}
-
-function playgamaBridgeStorageIsSupported(storageType) {
-    return serializeData(window.bridge.storage.isSupported(storageType))
-}
-
-function playgamaBridgeStorageIsAvailable(storageType) {
-    return serializeData(window.bridge.storage.isAvailable(storageType))
-}
-
-function playgamaBridgeStorageSet(key, value, storageType) {
+function playgamaBridgeStorageSet(key, value) {
     try {
         key = JSON.parse(key)
         value = JSON.parse(value)
     }
     catch (e) {}
 
-    window.bridge.storage.set(key, value, storageType)
+    window.bridge.storage.set(key, value)
         .then(() => {
             sendCallbackToGameMaker('storage_set', true)
         })
@@ -229,13 +217,13 @@ function playgamaBridgeStorageSet(key, value, storageType) {
         })
 }
 
-function playgamaBridgeStorageGet(key, storageType) {
+function playgamaBridgeStorageGet(key) {
     try {
         key = JSON.parse(key)
     }
     catch (e) {}
 
-    window.bridge.storage.get(key, storageType, false)
+    window.bridge.storage.get(key, false)
         .then((data) => {
             sendCallbackToGameMaker('storage_get', true, data)
         })
@@ -244,13 +232,13 @@ function playgamaBridgeStorageGet(key, storageType) {
         })
 }
 
-function playgamaBridgeStorageDelete(key, storageType) {
+function playgamaBridgeStorageDelete(key) {
     try {
         key = JSON.parse(key)
     }
     catch (e) {}
 
-    window.bridge.storage.delete(key, storageType)
+    window.bridge.storage.delete(key)
         .then(() => {
             sendCallbackToGameMaker('storage_delete', true)
         })
