@@ -60,19 +60,6 @@ if async_load[? "type"] == "playgama_bridge_advertisement_check_adblock_callback
 }
 
 
-// game callbacks
-if async_load[? "type"] == "playgama_bridge_game_visibility_state_changed" {
-	switch async_load[? "data"] {
-		case "visible":
-			// your logic here
-			break
-		case "hidden":
-			// your logic here
-			break
-	}
-}
-
-
 // platform callbacks
 if async_load[? "type"] == "playgama_bridge_platform_audio_state_changed" {
 	if async_load[? "data"] {

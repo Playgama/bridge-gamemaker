@@ -22,12 +22,6 @@ bridge.advertisement.on(
         sendStateToGameMaker('advertisement_advanced_banners_state', state)
     })
 
-bridge.game.on(
-    bridge.EVENT_NAME.VISIBILITY_STATE_CHANGED,
-    (state) => {
-        sendStateToGameMaker('game_visibility_state', state)
-    })
-
 bridge.platform.on(
     bridge.EVENT_NAME.AUDIO_STATE_CHANGED,
     (isEnabled) => {
@@ -191,12 +185,6 @@ function playgamaBridgePlatformGetGameById(options) {
         .catch(() => {
             sendCallbackToGameMaker('platform_get_game_by_id', false)
         })
-}
-
-
-// game
-function playgamaBridgeGameVisibilityState() {
-    return window.bridge.game.visibilityState
 }
 
 
