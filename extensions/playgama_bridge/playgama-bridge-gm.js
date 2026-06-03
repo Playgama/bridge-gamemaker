@@ -162,6 +162,10 @@ function playgamaBridgePlatformIsGetGameByIdSupported() {
     return serializeData(window.bridge.platform.isGetGameByIdSupported)
 }
 
+function playgamaBridgePlatformIsExternalCallsSupported() {
+    return serializeData(window.bridge.platform.isExternalCallsSupported)
+}
+
 function playgamaBridgePlatformGetAllGames() {
     window.bridge.platform.getAllGames()
         .then((data) => {
