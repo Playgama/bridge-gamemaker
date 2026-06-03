@@ -251,6 +251,10 @@ function playgamaBridgePlayerIsAuthorized() {
     return serializeData(window.bridge.player.isAuthorized)
 }
 
+function playgamaBridgePlayerIsGuest() {
+    return serializeData(window.bridge.player.isGuest)
+}
+
 function playgamaBridgePlayerId() {
     return serializeData(window.bridge.player.id)
 }
