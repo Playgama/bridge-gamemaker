@@ -197,12 +197,6 @@ if async_load[? "type"] == "playgama_bridge_achievements_get_list_callback" {
 	}
 }
 
-if async_load[? "type"] == "playgama_bridge_achievements_show_native_popup_callback" {
-	if async_load[? "success"] {
-		// your logic
-	}
-}
-
 
 // payments callbacks
 if async_load[? "type"] == "playgama_bridge_payments_purchase_callback" {

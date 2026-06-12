@@ -456,14 +456,6 @@ function playgamaBridgeAchievementsIsSupported() {
     return serializeData(window.bridge.achievements.isSupported)
 }
 
-function playgamaBridgeAchievementsIsGetListSupported() {
-    return serializeData(window.bridge.achievements.isGetListSupported)
-}
-
-function playgamaBridgeAchievementsIsNativePopupSupported() {
-    return serializeData(window.bridge.achievements.isNativePopupSupported)
-}
-
 function playgamaBridgeAchievementsUnlock(id) {
     window.bridge.achievements.unlock(id)
         .then(() => {
@@ -483,17 +475,6 @@ function playgamaBridgeAchievementsGetList() {
             sendCallbackToGameMaker('achievements_get_list', false)
         })
 }
-
-function playgamaBridgeAchievementsShowNativePopup() {
-    window.bridge.achievements.showNativePopup()
-        .then(() => {
-            sendCallbackToGameMaker('achievements_show_native_popup', true)
-        })
-        .catch(() => {
-            sendCallbackToGameMaker('achievements_show_native_popup', false)
-        })
-}
-
 
 // payments
 function playgamaBridgePaymentsIsSupported() {
