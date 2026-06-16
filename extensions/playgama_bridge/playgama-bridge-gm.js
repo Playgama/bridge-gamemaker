@@ -566,13 +566,17 @@ function playgamaBridgeRemoteConfigIsSupported() {
     return serializeData(window.bridge.remoteConfig.isSupported)
 }
 
-function playgamaBridgeRemoteConfigGet(options) {
+function playgamaBridgeRemoteConfigSetDynamicParameters(parameters) {
     try {
-        options = JSON.parse(options)
+        parameters = JSON.parse(parameters)
     }
     catch (e) {}
 
-    window.bridge.remoteConfig.get(options)
+    window.bridge.remoteConfig.setDynamicParameters(parameters)
+}
+
+function playgamaBridgeRemoteConfigGet() {
+    window.bridge.remoteConfig.get()
         .then((data) => {
             sendCallbackToGameMaker('remote_config_get', true, data)
         })
