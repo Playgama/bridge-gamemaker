@@ -410,8 +410,8 @@ function playgamaBridgeSocialRate() {
         })
 }
 
-function playgamaBridgeSocialIsExternalLinksAllowed() {
-    return serializeData(window.bridge.social.isExternalLinksAllowed)
+function playgamaBridgePlatformIsExternalLinksAllowed() {
+    return serializeData(window.bridge.platform.isExternalLinksAllowed)
 }
 
 
