@@ -154,41 +154,32 @@ function playgamaBridgePlatformGetServerTime() {
         })
 }
 
-function playgamaBridgePlatformIsGetAllGamesSupported() {
-    return serializeData(window.bridge.platform.isGetAllGamesSupported)
-}
-
-function playgamaBridgePlatformIsGetGameByIdSupported() {
-    return serializeData(window.bridge.platform.isGetGameByIdSupported)
-}
-
 function playgamaBridgePlatformIsExternalCallsSupported() {
     return serializeData(window.bridge.platform.isExternalCallsSupported)
 }
 
-function playgamaBridgePlatformGetAllGames() {
-    window.bridge.platform.getAllGames()
+
+// cross promo
+function playgamaBridgeCrossPromoGetGamesList() {
+    window.bridge.crossPromo.getGamesList()
         .then((data) => {
-            sendCallbackToGameMaker('platform_get_all_games', true, data)
+            sendCallbackToGameMaker('cross_promo_get_games_list', true, data)
         })
         .catch(() => {
-            sendCallbackToGameMaker('platform_get_all_games', false)
+            sendCallbackToGameMaker('cross_promo_get_games_list', false)
         })
 }
 
-function playgamaBridgePlatformGetGameById(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
+function playgamaBridgeCrossPromoShow() {
+    window.bridge.crossPromo.show()
+}
 
-    window.bridge.platform.getGameById(options)
-        .then((data) => {
-            sendCallbackToGameMaker('platform_get_game_by_id', true, data)
-        })
-        .catch(() => {
-            sendCallbackToGameMaker('platform_get_game_by_id', false)
-        })
+function playgamaBridgeCrossPromoHide() {
+    window.bridge.crossPromo.hide()
+}
+
+function playgamaBridgeCrossPromoIsVisible() {
+    return serializeData(window.bridge.crossPromo.isVisible)
 }
 
 
