@@ -154,41 +154,32 @@ function playgamaBridgePlatformGetServerTime() {
         })
 }
 
-function playgamaBridgePlatformIsGetAllGamesSupported() {
-    return serializeData(window.bridge.platform.isGetAllGamesSupported)
-}
-
-function playgamaBridgePlatformIsGetGameByIdSupported() {
-    return serializeData(window.bridge.platform.isGetGameByIdSupported)
-}
-
 function playgamaBridgePlatformIsExternalCallsSupported() {
     return serializeData(window.bridge.platform.isExternalCallsSupported)
 }
 
-function playgamaBridgePlatformGetAllGames() {
-    window.bridge.platform.getAllGames()
+
+// cross promo
+function playgamaBridgeCrossPromoGetGamesList() {
+    window.bridge.crossPromo.getGamesList()
         .then((data) => {
-            sendCallbackToGameMaker('platform_get_all_games', true, data)
+            sendCallbackToGameMaker('cross_promo_get_games_list', true, data)
         })
         .catch(() => {
-            sendCallbackToGameMaker('platform_get_all_games', false)
+            sendCallbackToGameMaker('cross_promo_get_games_list', false)
         })
 }
 
-function playgamaBridgePlatformGetGameById(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
+function playgamaBridgeCrossPromoShow() {
+    window.bridge.crossPromo.show()
+}
 
-    window.bridge.platform.getGameById(options)
-        .then((data) => {
-            sendCallbackToGameMaker('platform_get_game_by_id', true, data)
-        })
-        .catch(() => {
-            sendCallbackToGameMaker('platform_get_game_by_id', false)
-        })
+function playgamaBridgeCrossPromoHide() {
+    window.bridge.crossPromo.hide()
+}
+
+function playgamaBridgeCrossPromoIsVisible() {
+    return serializeData(window.bridge.crossPromo.isVisible)
 }
 
 
@@ -456,21 +447,8 @@ function playgamaBridgeAchievementsIsSupported() {
     return serializeData(window.bridge.achievements.isSupported)
 }
 
-function playgamaBridgeAchievementsIsGetListSupported() {
-    return serializeData(window.bridge.achievements.isGetListSupported)
-}
-
-function playgamaBridgeAchievementsIsNativePopupSupported() {
-    return serializeData(window.bridge.achievements.isNativePopupSupported)
-}
-
-function playgamaBridgeAchievementsUnlock(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
-
-    window.bridge.achievements.unlock(options)
+function playgamaBridgeAchievementsUnlock(id) {
+    window.bridge.achievements.unlock(id)
         .then(() => {
             sendCallbackToGameMaker('achievements_unlock', true)
         })
@@ -479,13 +457,8 @@ function playgamaBridgeAchievementsUnlock(options) {
         })
 }
 
-function playgamaBridgeAchievementsGetList(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
-
-    window.bridge.achievements.getList(options)
+function playgamaBridgeAchievementsGetList() {
+    window.bridge.achievements.getList()
         .then((data) => {
             sendCallbackToGameMaker('achievements_get_list', true, data)
         })
@@ -493,22 +466,6 @@ function playgamaBridgeAchievementsGetList(options) {
             sendCallbackToGameMaker('achievements_get_list', false)
         })
 }
-
-function playgamaBridgeAchievementsShowNativePopup(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
-
-    window.bridge.achievements.showNativePopup(options)
-        .then(() => {
-            sendCallbackToGameMaker('achievements_show_native_popup', true)
-        })
-        .catch(() => {
-            sendCallbackToGameMaker('achievements_show_native_popup', false)
-        })
-}
-
 
 // payments
 function playgamaBridgePaymentsIsSupported() {
@@ -566,13 +523,17 @@ function playgamaBridgeRemoteConfigIsSupported() {
     return serializeData(window.bridge.remoteConfig.isSupported)
 }
 
-function playgamaBridgeRemoteConfigGet(options) {
+function playgamaBridgeRemoteConfigSetDynamicParameters(parameters) {
     try {
-        options = JSON.parse(options)
+        parameters = JSON.parse(parameters)
     }
     catch (e) {}
 
-    window.bridge.remoteConfig.get(options)
+    window.bridge.remoteConfig.setDynamicParameters(parameters)
+}
+
+function playgamaBridgeRemoteConfigGet() {
+    window.bridge.remoteConfig.get()
         .then((data) => {
             sendCallbackToGameMaker('remote_config_get', true, data)
         })

@@ -79,15 +79,11 @@ if async_load[? "type"] == "playgama_bridge_platform_get_server_time_callback" {
 	}
 }
 
-if async_load[? "type"] == "playgama_bridge_platform_get_all_games_callback" {
-	if async_load[? "success"] {
-		var all_games = json_parse(async_load[? "data"])
-	}
-}
 
-if async_load[? "type"] == "playgama_bridge_platform_get_game_by_id_callback" {
+// cross promo callbacks
+if async_load[? "type"] == "playgama_bridge_cross_promo_get_games_list_callback" {
 	if async_load[? "success"] {
-		var game = json_parse(async_load[? "data"])
+		var games_list = json_parse(async_load[? "data"])
 	}
 }
 
@@ -194,12 +190,6 @@ if async_load[? "type"] == "playgama_bridge_achievements_unlock_callback" {
 if async_load[? "type"] == "playgama_bridge_achievements_get_list_callback" {
 	if async_load[? "success"] {
 		var list = json_parse(async_load[? "data"])
-	}
-}
-
-if async_load[? "type"] == "playgama_bridge_achievements_show_native_popup_callback" {
-	if async_load[? "success"] {
-		// your logic
 	}
 }
 
