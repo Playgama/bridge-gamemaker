@@ -241,3 +241,32 @@ if async_load[? "type"] == "playgama_bridge_remote_config_get_callback" {
 		var values = json_parse(async_load[? "data"])
 	}
 }
+
+
+// tasks callbacks
+if async_load[? "type"] == "playgama_bridge_tasks_get_tasks_callback" {
+	if async_load[? "success"] {
+		var tasks = json_parse(async_load[? "data"])
+		for (var i = 0; i < array_length(tasks); i += 1)
+		{
+			var task = tasks[i]
+			var taskId = task.id
+			var taskType = task.type
+			var completed = task.completed
+			// task.targets[] = { id, amount, progress, completed }
+			// task.rewards[] = { id, amount }
+		}
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_tasks_add_progress_callback" {
+	if async_load[? "success"] {
+		// progress added; call playgama_bridge_tasks_get_tasks() to refresh the list
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_tasks_claim_reward_callback" {
+	if async_load[? "success"] {
+		// reward claimed; the rewards to grant are on the task (task.rewards from get_tasks)
+	}
+}

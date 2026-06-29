@@ -182,6 +182,38 @@ function playgamaBridgeCrossPromoIsVisible() {
     return serializeData(window.bridge.crossPromo.isVisible)
 }
 
+// tasks
+function playgamaBridgeTasksGetTasks() {
+    window.bridge.tasks.getTasks()
+        .then((data) => {
+            sendCallbackToGameMaker('tasks_get_tasks', true, data)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('tasks_get_tasks', false)
+        })
+}
+
+function playgamaBridgeTasksAddProgress(metric, amount) {
+    window.bridge.tasks.addProgress(metric, amount)
+        .then(() => {
+            sendCallbackToGameMaker('tasks_add_progress', true)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('tasks_add_progress', false)
+        })
+}
+
+function playgamaBridgeTasksClaimReward(taskId) {
+    window.bridge.tasks.claimReward(taskId)
+        .then((claimed) => {
+            // claimed is a boolean: whether the reward was claimed
+            sendCallbackToGameMaker('tasks_claim_reward', claimed)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('tasks_claim_reward', false)
+        })
+}
+
 
 // storage
 function playgamaBridgeStorageSet(key, value) {
