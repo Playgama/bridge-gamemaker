@@ -81,7 +81,7 @@ if async_load[? "type"] == "playgama_bridge_platform_get_server_time_callback" {
 
 
 // cross promo callbacks
-if async_load[? "type"] == "playgama_bridge_cross_promo_get_games_list_callback" {
+if async_load[? "type"] == "playgama_bridge_cross_promo_get_games_callback" {
 	if async_load[? "success"] {
 		var games_list = json_parse(async_load[? "data"])
 	}
@@ -187,7 +187,7 @@ if async_load[? "type"] == "playgama_bridge_achievements_unlock_callback" {
 	}
 }
 
-if async_load[? "type"] == "playgama_bridge_achievements_get_list_callback" {
+if async_load[? "type"] == "playgama_bridge_achievements_get_achievements_callback" {
 	if async_load[? "success"] {
 		var list = json_parse(async_load[? "data"])
 	}
@@ -268,5 +268,37 @@ if async_load[? "type"] == "playgama_bridge_tasks_add_progress_callback" {
 if async_load[? "type"] == "playgama_bridge_tasks_claim_reward_callback" {
 	if async_load[? "success"] {
 		// reward claimed; the rewards to grant are on the task (task.rewards from get_tasks)
+	}
+}
+
+
+// daily rewards callbacks
+if async_load[? "type"] == "playgama_bridge_daily_rewards_get_rewards_callback" {
+	if async_load[? "success"] {
+		var rewards = json_parse(async_load[? "data"])
+		for (var i = 0; i < array_length(rewards); i += 1)
+		{
+			var reward_id = rewards[i]
+		}
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_daily_rewards_get_current_day_callback" {
+	if async_load[? "success"] {
+		// 0-based index of the reward the player is currently on
+		var current_day = async_load[? "data"]
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_daily_rewards_get_current_reward_callback" {
+	if async_load[? "success"] {
+		// id of the reward claimable today, or undefined when nothing can be claimed
+		var current_reward = async_load[? "data"]
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_daily_rewards_claim_current_reward_callback" {
+	if async_load[? "success"] {
+		// reward claimed; grant the current reward (id from get_current_reward)
 	}
 }
