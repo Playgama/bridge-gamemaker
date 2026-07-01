@@ -84,6 +84,10 @@ function playgamaBridgeAdvertisementHideBanner() {
     window.bridge.advertisement.hideBanner()
 }
 
+function playgamaBridgeAdvertisementBannerState() {
+    return window.bridge.advertisement.bannerState
+}
+
 function playgamaBridgeAdvertisementIsAdvancedBannersSupported() {
     return serializeData(window.bridge.advertisement.isAdvancedBannersSupported)
 }
@@ -142,6 +146,10 @@ function playgamaBridgePlatformSendCustomMessage(id, options) {
 
 function playgamaBridgePlatformIsAudioEnabled() {
     return serializeData(window.bridge.platform.isAudioEnabled)
+}
+
+function playgamaBridgePlatformIsPaused() {
+    return serializeData(window.bridge.platform.isPaused)
 }
 
 function playgamaBridgePlatformGetServerTime() {
