@@ -22,12 +22,6 @@ bridge.advertisement.on(
         sendStateToGameMaker('advertisement_advanced_banners_state', state)
     })
 
-bridge.game.on(
-    bridge.EVENT_NAME.VISIBILITY_STATE_CHANGED,
-    (state) => {
-        sendStateToGameMaker('game_visibility_state', state)
-    })
-
 bridge.platform.on(
     bridge.EVENT_NAME.AUDIO_STATE_CHANGED,
     (isEnabled) => {
@@ -90,6 +84,10 @@ function playgamaBridgeAdvertisementHideBanner() {
     window.bridge.advertisement.hideBanner()
 }
 
+function playgamaBridgeAdvertisementBannerState() {
+    return window.bridge.advertisement.bannerState
+}
+
 function playgamaBridgeAdvertisementIsAdvancedBannersSupported() {
     return serializeData(window.bridge.advertisement.isAdvancedBannersSupported)
 }
@@ -150,6 +148,10 @@ function playgamaBridgePlatformIsAudioEnabled() {
     return serializeData(window.bridge.platform.isAudioEnabled)
 }
 
+function playgamaBridgePlatformIsPaused() {
+    return serializeData(window.bridge.platform.isPaused)
+}
+
 function playgamaBridgePlatformGetServerTime() {
     window.bridge.platform.getServerTime()
         .then((data) => {
@@ -160,67 +162,119 @@ function playgamaBridgePlatformGetServerTime() {
         })
 }
 
-function playgamaBridgePlatformIsGetAllGamesSupported() {
-    return serializeData(window.bridge.platform.isGetAllGamesSupported)
+function playgamaBridgePlatformIsExternalCallsSupported() {
+    return serializeData(window.bridge.platform.isExternalCallsSupported)
 }
 
-function playgamaBridgePlatformIsGetGameByIdSupported() {
-    return serializeData(window.bridge.platform.isGetGameByIdSupported)
-}
 
-function playgamaBridgePlatformGetAllGames() {
-    window.bridge.platform.getAllGames()
+// cross promo
+function playgamaBridgeCrossPromoGetGames() {
+    window.bridge.crossPromo.getGames()
         .then((data) => {
-            sendCallbackToGameMaker('platform_get_all_games', true, data)
+            sendCallbackToGameMaker('cross_promo_get_games', true, data)
         })
         .catch(() => {
-            sendCallbackToGameMaker('platform_get_all_games', false)
+            sendCallbackToGameMaker('cross_promo_get_games', false)
         })
 }
 
-function playgamaBridgePlatformGetGameById(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
+function playgamaBridgeCrossPromoShow() {
+    window.bridge.crossPromo.show()
+}
 
-    window.bridge.platform.getGameById(options)
+function playgamaBridgeCrossPromoHide() {
+    window.bridge.crossPromo.hide()
+}
+
+function playgamaBridgeCrossPromoIsVisible() {
+    return serializeData(window.bridge.crossPromo.isVisible)
+}
+
+// tasks
+function playgamaBridgeTasksGetTasks() {
+    window.bridge.tasks.getTasks()
         .then((data) => {
-            sendCallbackToGameMaker('platform_get_game_by_id', true, data)
+            sendCallbackToGameMaker('tasks_get_tasks', true, data)
         })
         .catch(() => {
-            sendCallbackToGameMaker('platform_get_game_by_id', false)
+            sendCallbackToGameMaker('tasks_get_tasks', false)
+        })
+}
+
+function playgamaBridgeTasksAddProgress(metric, amount) {
+    window.bridge.tasks.addProgress(metric, amount)
+        .then(() => {
+            sendCallbackToGameMaker('tasks_add_progress', true)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('tasks_add_progress', false)
+        })
+}
+
+function playgamaBridgeTasksClaimReward(taskId) {
+    window.bridge.tasks.claimReward(taskId)
+        .then((claimed) => {
+            // claimed is a boolean: whether the reward was claimed
+            sendCallbackToGameMaker('tasks_claim_reward', claimed)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('tasks_claim_reward', false)
         })
 }
 
 
-// game
-function playgamaBridgeGameVisibilityState() {
-    return window.bridge.game.visibilityState
+// daily rewards
+function playgamaBridgeDailyRewardsGetRewards() {
+    window.bridge.dailyRewards.getRewards()
+        .then((data) => {
+            sendCallbackToGameMaker('daily_rewards_get_rewards', true, data)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('daily_rewards_get_rewards', false)
+        })
+}
+
+function playgamaBridgeDailyRewardsGetCurrentDay() {
+    window.bridge.dailyRewards.getCurrentDay()
+        .then((data) => {
+            sendCallbackToGameMaker('daily_rewards_get_current_day', true, data)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('daily_rewards_get_current_day', false)
+        })
+}
+
+function playgamaBridgeDailyRewardsGetCurrentReward() {
+    window.bridge.dailyRewards.getCurrentReward()
+        .then((data) => {
+            sendCallbackToGameMaker('daily_rewards_get_current_reward', true, data)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('daily_rewards_get_current_reward', false)
+        })
+}
+
+function playgamaBridgeDailyRewardsClaimCurrentReward() {
+    window.bridge.dailyRewards.claimCurrentReward()
+        .then((claimed) => {
+            // claimed is a boolean: whether the reward was claimed
+            sendCallbackToGameMaker('daily_rewards_claim_current_reward', claimed)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('daily_rewards_claim_current_reward', false)
+        })
 }
 
 
 // storage
-function playgamaBridgeStorageDefaultType() {
-    return window.bridge.storage.defaultType
-}
-
-function playgamaBridgeStorageIsSupported(storageType) {
-    return serializeData(window.bridge.storage.isSupported(storageType))
-}
-
-function playgamaBridgeStorageIsAvailable(storageType) {
-    return serializeData(window.bridge.storage.isAvailable(storageType))
-}
-
-function playgamaBridgeStorageSet(key, value, storageType) {
+function playgamaBridgeStorageSet(key, value) {
     try {
         key = JSON.parse(key)
         value = JSON.parse(value)
     }
     catch (e) {}
 
-    window.bridge.storage.set(key, value, storageType)
+    window.bridge.storage.set(key, value)
         .then(() => {
             sendCallbackToGameMaker('storage_set', true)
         })
@@ -229,13 +283,13 @@ function playgamaBridgeStorageSet(key, value, storageType) {
         })
 }
 
-function playgamaBridgeStorageGet(key, storageType) {
+function playgamaBridgeStorageGet(key) {
     try {
         key = JSON.parse(key)
     }
     catch (e) {}
 
-    window.bridge.storage.get(key, storageType, false)
+    window.bridge.storage.get(key, false)
         .then((data) => {
             sendCallbackToGameMaker('storage_get', true, data)
         })
@@ -244,13 +298,13 @@ function playgamaBridgeStorageGet(key, storageType) {
         })
 }
 
-function playgamaBridgeStorageDelete(key, storageType) {
+function playgamaBridgeStorageDelete(key) {
     try {
         key = JSON.parse(key)
     }
     catch (e) {}
 
-    window.bridge.storage.delete(key, storageType)
+    window.bridge.storage.delete(key)
         .then(() => {
             sendCallbackToGameMaker('storage_delete', true)
         })
@@ -273,6 +327,10 @@ function playgamaBridgePlayerIsAuthorizationSupported() {
 
 function playgamaBridgePlayerIsAuthorized() {
     return serializeData(window.bridge.player.isAuthorized)
+}
+
+function playgamaBridgePlayerIsGuest() {
+    return serializeData(window.bridge.player.isGuest)
 }
 
 function playgamaBridgePlayerId() {
@@ -426,8 +484,8 @@ function playgamaBridgeSocialRate() {
         })
 }
 
-function playgamaBridgeSocialIsExternalLinksAllowed() {
-    return serializeData(window.bridge.social.isExternalLinksAllowed)
+function playgamaBridgePlatformIsExternalLinksAllowed() {
+    return serializeData(window.bridge.platform.isExternalLinksAllowed)
 }
 
 
@@ -468,25 +526,8 @@ function playgamaBridgeLeaderboardsShowNativePopup(id) {
 
 
 // achievements
-function playgamaBridgeAchievementsIsSupported() {
-    return serializeData(window.bridge.achievements.isSupported)
-}
-
-function playgamaBridgeAchievementsIsGetListSupported() {
-    return serializeData(window.bridge.achievements.isGetListSupported)
-}
-
-function playgamaBridgeAchievementsIsNativePopupSupported() {
-    return serializeData(window.bridge.achievements.isNativePopupSupported)
-}
-
-function playgamaBridgeAchievementsUnlock(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
-
-    window.bridge.achievements.unlock(options)
+function playgamaBridgeAchievementsUnlock(id) {
+    window.bridge.achievements.unlock(id)
         .then(() => {
             sendCallbackToGameMaker('achievements_unlock', true)
         })
@@ -495,36 +536,15 @@ function playgamaBridgeAchievementsUnlock(options) {
         })
 }
 
-function playgamaBridgeAchievementsGetList(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
-
-    window.bridge.achievements.getList(options)
+function playgamaBridgeAchievementsGetAchievements() {
+    window.bridge.achievements.getAchievements()
         .then((data) => {
-            sendCallbackToGameMaker('achievements_get_list', true, data)
+            sendCallbackToGameMaker('achievements_get_achievements', true, data)
         })
         .catch(() => {
-            sendCallbackToGameMaker('achievements_get_list', false)
+            sendCallbackToGameMaker('achievements_get_achievements', false)
         })
 }
-
-function playgamaBridgeAchievementsShowNativePopup(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
-
-    window.bridge.achievements.showNativePopup(options)
-        .then(() => {
-            sendCallbackToGameMaker('achievements_show_native_popup', true)
-        })
-        .catch(() => {
-            sendCallbackToGameMaker('achievements_show_native_popup', false)
-        })
-}
-
 
 // payments
 function playgamaBridgePaymentsIsSupported() {
@@ -582,13 +602,17 @@ function playgamaBridgeRemoteConfigIsSupported() {
     return serializeData(window.bridge.remoteConfig.isSupported)
 }
 
-function playgamaBridgeRemoteConfigGet(options) {
+function playgamaBridgeRemoteConfigSetContext(parameters) {
     try {
-        options = JSON.parse(options)
+        parameters = JSON.parse(parameters)
     }
     catch (e) {}
 
-    window.bridge.remoteConfig.get(options)
+    window.bridge.remoteConfig.setContext(parameters)
+}
+
+function playgamaBridgeRemoteConfigGet() {
+    window.bridge.remoteConfig.get()
         .then((data) => {
             sendCallbackToGameMaker('remote_config_get', true, data)
         })
