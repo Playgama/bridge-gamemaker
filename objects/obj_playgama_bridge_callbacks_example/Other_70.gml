@@ -286,7 +286,7 @@ if async_load[? "type"] == "playgama_bridge_daily_rewards_get_rewards_callback" 
 if async_load[? "type"] == "playgama_bridge_daily_rewards_get_current_day_callback" {
 	if async_load[? "success"] {
 		// 0-based index of the reward the player is currently on
-		var current_day = async_load[? "data"]
+		var current_day_index = async_load[? "data"]
 	}
 }
 
