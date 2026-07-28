@@ -1,0 +1,35 @@
+name: GitHub Release
+
+# Creates a GitHub release with the .yymps package attached when a v2+ tag is pushed (v1.x tags are ignored).
+# The package is assembled by .github/scripts/build_yymps.py from repo sources
+# and the templates in .github/package/.
+# Release notes are auto-generated from commits and can be edited afterwards.
+
+on:
+  push:
+    tags:
+      - 'v[2-9].*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package .yymps
+        env:
+          TAG: ${{ github.ref_name }}
+        run: python3 .github/scripts/build_yymps.py "$TAG" "playgama_bridge_${TAG}.yymps"
+      - name: Create or update release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          ASSET="playgama_bridge_${TAG}.yymps"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$ASSET" --clobber
+          else
+            gh release create "$TAG" "$ASSET" --title "$TAG" --generate-notes --verify-tag
+          fi

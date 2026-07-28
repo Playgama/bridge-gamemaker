@@ -1,0 +1,46 @@
+{
+  "$GMProject":"v1",
+  "%Name":"Playgama Bridge",
+  "AudioGroups":[
+    {"$GMAudioGroup":"v1","%Name":"audiogroup_default","exportDir":"","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
+  ],
+  "configs":{
+    "children":[],
+    "name":"Default",
+  },
+  "defaultScriptType":1,
+  "Folders":[
+    {"$GMFolder":"","%Name":"Extensions","folderPath":"folders/Extensions.yy","name":"Extensions","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Objects","folderPath":"folders/Objects.yy","name":"Objects","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"playgama_bridge","folderPath":"folders/Objects/playgama_bridge.yy","name":"playgama_bridge","resourceType":"GMFolder","resourceVersion":"2.0",},
+  ],
+  "ForcedPrefabProjectReferences":[],
+  "IncludedFiles":[
+    {"$GMIncludedFile":"","%Name":"playgama-bridge-config.json","CopyToMask":-1,"filePath":"datafiles","name":"playgama-bridge-config.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"playgama-bridge-index.html","CopyToMask":32,"filePath":"datafiles","name":"playgama-bridge-index.html","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"playgama-bridge.js","CopyToMask":-1,"filePath":"datafiles","name":"playgama-bridge.js","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+  ],
+  "isEcma":false,
+  "LibraryEmitters":[],
+  "MetaData":{
+    "IDEVersion":"2024.14.4.222",
+    "PackageType":"Asset",
+    "PackageName":"Playgama Bridge",
+    "PackageID":"com.playgama.bridge",
+    "PackagePublisher":"Playgama.com",
+    "PackageVersion":"{{VERSION}}",
+  },
+  "name":"Playgama Bridge",
+  "resources":[
+    {"id":{"name":"playgama_bridge","path":"extensions/playgama_bridge/playgama_bridge.yy",},},
+    {"id":{"name":"obj_example","path":"objects/obj_example/obj_example.yy",},},
+    {"id":{"name":"obj_playgama_bridge_callbacks_example","path":"objects/obj_playgama_bridge_callbacks_example/obj_playgama_bridge_callbacks_example.yy",},},
+  ],
+  "resourceType":"GMProject",
+  "resourceVersion":"2.0",
+  "RoomOrderNodes":[],
+  "templateType":null,
+  "TextureGroups":[
+    {"$GMTextureGroup":"","%Name":"Default","autocrop":true,"border":2,"compressFormat":"bz2","customOptions":"","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"name":"Default","resourceType":"GMTextureGroup","resourceVersion":"2.0","targets":-1,},
+  ],
+}

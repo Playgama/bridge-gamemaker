@@ -1,0 +1,10 @@
+{
+  "FolderOrderSettings":[
+    {"name":"Extensions","order":14,"path":"folders/Extensions.yy",},
+    {"name":"Objects","order":9,"path":"folders/Objects.yy",},
+    {"name":"playgama_bridge","order":1,"path":"folders/Objects/playgama_bridge.yy",},
+  ],
+  "ResourceOrderSettings":[
+    {"name":"obj_example","order":2,"path":"objects/obj_example/obj_example.yy",},
+  ],
+}
