@@ -302,3 +302,22 @@ if async_load[? "type"] == "playgama_bridge_daily_rewards_claim_current_reward_c
 		// reward claimed; grant the current reward (id from get_current_reward)
 	}
 }
+
+// notifications callbacks
+if async_load[? "type"] == "playgama_bridge_notifications_schedule_callback" {
+	if async_load[? "success"] {
+		// notification scheduled
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_notifications_cancel_callback" {
+	if async_load[? "success"] {
+		// notification canceled
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_notifications_cancel_all_callback" {
+	if async_load[? "success"] {
+		// all notifications canceled
+	}
+}
