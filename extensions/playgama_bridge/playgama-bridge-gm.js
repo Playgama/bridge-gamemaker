@@ -266,6 +266,47 @@ function playgamaBridgeDailyRewardsClaimCurrentReward() {
 }
 
 
+// notifications
+function playgamaBridgeNotificationsIsSupported() {
+    return serializeData(window.bridge.notifications.isSupported)
+}
+
+function playgamaBridgeNotificationsSchedule(notification) {
+    try {
+        notification = JSON.parse(notification)
+    }
+    catch (e) {}
+
+    window.bridge.notifications.schedule(notification)
+        .then(() => {
+            sendCallbackToGameMaker('notifications_schedule', true)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('notifications_schedule', false)
+        })
+}
+
+function playgamaBridgeNotificationsCancel(id) {
+    window.bridge.notifications.cancel(id)
+        .then(() => {
+            sendCallbackToGameMaker('notifications_cancel', true)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('notifications_cancel', false)
+        })
+}
+
+function playgamaBridgeNotificationsCancelAll() {
+    window.bridge.notifications.cancelAll()
+        .then(() => {
+            sendCallbackToGameMaker('notifications_cancel_all', true)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('notifications_cancel_all', false)
+        })
+}
+
+
 // storage
 function playgamaBridgeStorageSet(key, value) {
     try {

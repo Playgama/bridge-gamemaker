@@ -14,7 +14,7 @@
   "copyToTargets":17179869216,
   "description":"",
   "exportToGame":true,
-  "extensionVersion":"2.0.0",
+  "extensionVersion":"2.1.0",
   "files":[
     {"$GMExtensionFile":"v1","%Name":"","constants":[],"copyToTargets":17179869216,"filename":"playgama-bridge-gm.js","final":"","functions":[
         {"$GMExtensionFunction":"","%Name":"playgama_bridge_advertisement_show_interstitial","argCount":0,"args":[1,],"documentation":"","externalName":"playgamaBridgeAdvertisementShowInterstitial","help":"playgama_bridge_advertisement_show_interstitial(placement)","hidden":false,"kind":5,"name":"playgama_bridge_advertisement_show_interstitial","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":1,},
@@ -97,6 +97,10 @@
         {"$GMExtensionFunction":"","%Name":"playgama_bridge_daily_rewards_get_current_day","argCount":0,"args":[],"documentation":"","externalName":"playgamaBridgeDailyRewardsGetCurrentDay","help":"playgama_bridge_daily_rewards_get_current_day()","hidden":false,"kind":5,"name":"playgama_bridge_daily_rewards_get_current_day","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":1,},
         {"$GMExtensionFunction":"","%Name":"playgama_bridge_daily_rewards_get_current_reward","argCount":0,"args":[],"documentation":"","externalName":"playgamaBridgeDailyRewardsGetCurrentReward","help":"playgama_bridge_daily_rewards_get_current_reward()","hidden":false,"kind":5,"name":"playgama_bridge_daily_rewards_get_current_reward","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":1,},
         {"$GMExtensionFunction":"","%Name":"playgama_bridge_daily_rewards_claim_current_reward","argCount":0,"args":[],"documentation":"","externalName":"playgamaBridgeDailyRewardsClaimCurrentReward","help":"playgama_bridge_daily_rewards_claim_current_reward()","hidden":false,"kind":5,"name":"playgama_bridge_daily_rewards_claim_current_reward","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":1,},
+        {"$GMExtensionFunction":"","%Name":"playgama_bridge_notifications_is_supported","argCount":0,"args":[],"documentation":"","externalName":"playgamaBridgeNotificationsIsSupported","help":"playgama_bridge_notifications_is_supported()","hidden":false,"kind":5,"name":"playgama_bridge_notifications_is_supported","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
+        {"$GMExtensionFunction":"","%Name":"playgama_bridge_notifications_schedule","argCount":0,"args":[1,],"documentation":"","externalName":"playgamaBridgeNotificationsSchedule","help":"playgama_bridge_notifications_schedule(notification)","hidden":false,"kind":5,"name":"playgama_bridge_notifications_schedule","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":1,},
+        {"$GMExtensionFunction":"","%Name":"playgama_bridge_notifications_cancel","argCount":0,"args":[1,],"documentation":"","externalName":"playgamaBridgeNotificationsCancel","help":"playgama_bridge_notifications_cancel(id)","hidden":false,"kind":5,"name":"playgama_bridge_notifications_cancel","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":1,},
+        {"$GMExtensionFunction":"","%Name":"playgama_bridge_notifications_cancel_all","argCount":0,"args":[],"documentation":"","externalName":"playgamaBridgeNotificationsCancelAll","help":"playgama_bridge_notifications_cancel_all()","hidden":false,"kind":5,"name":"playgama_bridge_notifications_cancel_all","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":1,},
       ],"init":"","kind":5,"name":"","origname":"","ProxyFiles":[],"resourceType":"GMExtensionFile","resourceVersion":"2.0","uncompress":false,"usesRunnerInterface":false,},
   ],
   "gradleinject":"",
