@@ -412,12 +412,7 @@ function playgamaBridgeSocialIsShareSupported() {
 }
 
 function playgamaBridgeSocialShare(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
-
-    window.bridge.social.share(options)
+    window.bridge.social.share(parseSocialOptions(options))
         .then(() => {
             sendCallbackToGameMaker('social_share', true)
         })
@@ -450,12 +445,7 @@ function playgamaBridgeSocialIsInviteFriendsSupported() {
 }
 
 function playgamaBridgeSocialInviteFriends(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
-
-    window.bridge.social.inviteFriends(options)
+    window.bridge.social.inviteFriends(parseSocialOptions(options))
         .then(() => {
             sendCallbackToGameMaker('social_invite_friends', true)
         })
@@ -469,12 +459,7 @@ function playgamaBridgeSocialIsCreatePostSupported() {
 }
 
 function playgamaBridgeSocialCreatePost(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
-
-    window.bridge.social.createPost(options)
+    window.bridge.social.createPost(parseSocialOptions(options))
         .then(() => {
             sendCallbackToGameMaker('social_create_post', true)
         })
@@ -723,4 +708,19 @@ function serializeData(data) {
         default:
             return JSON.stringify(data)
     }
+}
+
+// share, inviteFriends and createPost take either the content as JSON or the id
+// of a config entry as a plain string. An id that happens to parse as JSON, like
+// "123", stays a string.
+function parseSocialOptions(options) {
+    try {
+        let parsed = JSON.parse(options)
+        if (typeof parsed === 'object' || typeof parsed === 'string') {
+            return parsed
+        }
+    }
+    catch (e) {}
+
+    return options
 }
