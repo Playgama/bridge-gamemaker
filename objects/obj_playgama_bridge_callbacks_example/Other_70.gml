@@ -159,6 +159,19 @@ if async_load[? "type"] == "playgama_bridge_social_rate_callback" {
 	}
 }
 
+if async_load[? "type"] == "playgama_bridge_social_get_post_reward_callback" {
+	if async_load[? "success"] {
+		// everything the posts brought: empty when there is nothing to grant
+		var rewards = json_parse(async_load[? "data"])
+		for (var i = 0; i < array_length(rewards); i += 1)
+		{
+			var rewardId = rewards[i].id
+			var amount = rewards[i].amount
+			var rewardType = rewards[i].type // "visit" | "author"
+		}
+	}
+}
+
 
 // leaderboards callbacks
 if async_load[? "type"] == "playgama_bridge_leaderboards_set_score_callback" {
