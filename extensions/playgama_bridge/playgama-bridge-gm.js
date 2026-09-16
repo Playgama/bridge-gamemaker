@@ -132,6 +132,14 @@ function playgamaBridgePlatformTld() {
     return serializeData(window.bridge.platform.tld)
 }
 
+function playgamaBridgePlatformLaunchSource() {
+    return serializeData(window.bridge.platform.launchSource)
+}
+
+function playgamaBridgePlatformData() {
+    return serializeData(window.bridge.platform.data)
+}
+
 function playgamaBridgePlatformSendMessage(message, options) {
     var parsed = {}
     try { parsed = JSON.parse(options) } catch (e) {}
@@ -458,8 +466,8 @@ function playgamaBridgeSocialIsCreatePostSupported() {
     return serializeData(window.bridge.social.isCreatePostSupported)
 }
 
-function playgamaBridgeSocialCreatePost(options) {
-    window.bridge.social.createPost(parseSocialOptions(options))
+function playgamaBridgeSocialCreatePost(options, payload) {
+    window.bridge.social.createPost(parseSocialOptions(options), payload || undefined)
         .then(() => {
             sendCallbackToGameMaker('social_create_post', true)
         })
@@ -507,6 +515,20 @@ function playgamaBridgeSocialRate() {
         })
         .catch(() => {
             sendCallbackToGameMaker('social_rate', false)
+        })
+}
+
+function playgamaBridgeSocialIsPostRewardSupported() {
+    return serializeData(window.bridge.social.isPostRewardSupported)
+}
+
+function playgamaBridgeSocialGetPostReward() {
+    window.bridge.social.getPostReward()
+        .then((data) => {
+            sendCallbackToGameMaker('social_get_post_reward', true, data)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('social_get_post_reward', false)
         })
 }
 
