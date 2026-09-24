@@ -670,6 +670,16 @@ function playgamaBridgeRemoteConfigGet() {
 }
 
 
+// analytics
+// The event name and the data are entirely up to the game — they are never
+// matched against the SDK's own event names.
+function playgamaBridgeAnalyticsSend(eventName, data) {
+    var parsed = {}
+    try { parsed = JSON.parse(data) } catch (e) {}
+    window.bridge.analytics.send(eventName, parsed)
+}
+
+
 // utils
 function sendStateToGameMaker(type, state) {
     let serializedState = this.serializeData(state)
