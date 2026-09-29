@@ -419,8 +419,8 @@ function playgamaBridgeSocialIsShareSupported() {
     return serializeData(window.bridge.social.isShareSupported)
 }
 
-function playgamaBridgeSocialShare(options) {
-    window.bridge.social.share(parseSocialOptions(options))
+function playgamaBridgeSocialShare(id) {
+    window.bridge.social.share(id || undefined)
         .then(() => {
             sendCallbackToGameMaker('social_share', true)
         })
@@ -433,13 +433,8 @@ function playgamaBridgeSocialIsJoinCommunitySupported() {
     return serializeData(window.bridge.social.isJoinCommunitySupported)
 }
 
-function playgamaBridgeSocialJoinCommunity(options) {
-    try {
-        options = JSON.parse(options)
-    }
-    catch (e) {}
-
-    window.bridge.social.joinCommunity(options)
+function playgamaBridgeSocialJoinCommunity() {
+    window.bridge.social.joinCommunity()
         .then(() => {
             sendCallbackToGameMaker('social_join_community', true)
         })
@@ -452,8 +447,8 @@ function playgamaBridgeSocialIsInviteFriendsSupported() {
     return serializeData(window.bridge.social.isInviteFriendsSupported)
 }
 
-function playgamaBridgeSocialInviteFriends(options) {
-    window.bridge.social.inviteFriends(parseSocialOptions(options))
+function playgamaBridgeSocialInviteFriends(id) {
+    window.bridge.social.inviteFriends(id || undefined)
         .then(() => {
             sendCallbackToGameMaker('social_invite_friends', true)
         })
@@ -466,8 +461,8 @@ function playgamaBridgeSocialIsCreatePostSupported() {
     return serializeData(window.bridge.social.isCreatePostSupported)
 }
 
-function playgamaBridgeSocialCreatePost(options, payload) {
-    window.bridge.social.createPost(parseSocialOptions(options), payload || undefined)
+function playgamaBridgeSocialCreatePost(id, payload) {
+    window.bridge.social.createPost(id || undefined, payload || undefined)
         .then(() => {
             sendCallbackToGameMaker('social_create_post', true)
         })
@@ -740,19 +735,4 @@ function serializeData(data) {
         default:
             return JSON.stringify(data)
     }
-}
-
-// share, inviteFriends and createPost take either the content as JSON or the id
-// of a config entry as a plain string. An id that happens to parse as JSON, like
-// "123", stays a string.
-function parseSocialOptions(options) {
-    try {
-        let parsed = JSON.parse(options)
-        if (typeof parsed === 'object' || typeof parsed === 'string') {
-            return parsed
-        }
-    }
-    catch (e) {}
-
-    return options
 }
