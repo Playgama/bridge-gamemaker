@@ -1,1 +1,1 @@
-playgama_bridge_platform_send_message("game_ready")
+playgama_bridge_platform_send_message("game_ready", "")
