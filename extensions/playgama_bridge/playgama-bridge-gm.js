@@ -34,6 +34,25 @@ bridge.platform.on(
         sendStateToGameMaker('platform_pause_state', isPaused)
     })
 
+// multiplayer events are forwarded as playgama_bridge_<event name>;
+// skipped when the bundled core has no multiplayer module
+if (bridge.multiplayer) {
+    [
+        bridge.EVENT_NAME.MULTIPLAYER_STATE_CHANGED,
+        bridge.EVENT_NAME.MULTIPLAYER_ROOM_LEFT,
+        bridge.EVENT_NAME.MULTIPLAYER_ROOM_UPDATED,
+        bridge.EVENT_NAME.MULTIPLAYER_PLAYER_JOINED,
+        bridge.EVENT_NAME.MULTIPLAYER_PLAYER_LEFT,
+        bridge.EVENT_NAME.MULTIPLAYER_PLAYER_UPDATED,
+        bridge.EVENT_NAME.MULTIPLAYER_HOST_CHANGED,
+        bridge.EVENT_NAME.MULTIPLAYER_MESSAGE_RECEIVED,
+    ].forEach((eventName) => {
+        bridge.multiplayer.on(eventName, (data) => {
+            sendEventToGameMaker(eventName, data)
+        })
+    })
+}
+
 
 // advertisement
 function playgamaBridgeAdvertisementShowInterstitial(placement) {
@@ -675,6 +694,160 @@ function playgamaBridgeAnalyticsSend(eventName, data) {
 }
 
 
+// multiplayer
+function playgamaBridgeMultiplayerIsSupported() {
+    return serializeData(window.bridge.multiplayer.isSupported)
+}
+
+function playgamaBridgeMultiplayerState() {
+    return window.bridge.multiplayer.state
+}
+
+function playgamaBridgeMultiplayerIsInRoom() {
+    return serializeData(window.bridge.multiplayer.isInRoom)
+}
+
+function playgamaBridgeMultiplayerIsHost() {
+    return serializeData(window.bridge.multiplayer.isHost)
+}
+
+function playgamaBridgeMultiplayerPlayerId() {
+    return serializeData(window.bridge.multiplayer.playerId)
+}
+
+function playgamaBridgeMultiplayerHostId() {
+    return serializeData(window.bridge.multiplayer.hostId)
+}
+
+function playgamaBridgeMultiplayerRoomId() {
+    return serializeData(window.bridge.multiplayer.roomId)
+}
+
+function playgamaBridgeMultiplayerRoom() {
+    return serializeData(window.bridge.multiplayer.room)
+}
+
+function playgamaBridgeMultiplayerPlayers() {
+    return serializeData(window.bridge.multiplayer.players)
+}
+
+function playgamaBridgeMultiplayerIsInviteSupported() {
+    return serializeData(window.bridge.multiplayer.isInviteSupported)
+}
+
+function playgamaBridgeMultiplayerLaunchRoomId() {
+    return serializeData(window.bridge.multiplayer.launchRoomId)
+}
+
+// failed operation callbacks carry the error code (e.g. MULTIPLAYER_ROOM_FULL) as data
+function playgamaBridgeMultiplayerCreateRoom(options) {
+    var parsed = {}
+    try { parsed = JSON.parse(options) } catch (e) {}
+
+    window.bridge.multiplayer.createRoom(parsed)
+        .then((roomId) => {
+            sendCallbackToGameMaker('multiplayer_create_room', true, roomId)
+        })
+        .catch((error) => {
+            sendCallbackToGameMaker('multiplayer_create_room', false, error && error.code)
+        })
+}
+
+function playgamaBridgeMultiplayerJoinRoom(roomId, options) {
+    var parsed = {}
+    try { parsed = JSON.parse(options) } catch (e) {}
+
+    window.bridge.multiplayer.joinRoom(roomId, parsed)
+        .then(() => {
+            sendCallbackToGameMaker('multiplayer_join_room', true)
+        })
+        .catch((error) => {
+            sendCallbackToGameMaker('multiplayer_join_room', false, error && error.code)
+        })
+}
+
+function playgamaBridgeMultiplayerJoinOrCreateRoom(options) {
+    var parsed = {}
+    try { parsed = JSON.parse(options) } catch (e) {}
+
+    window.bridge.multiplayer.joinOrCreateRoom(parsed)
+        .then((roomId) => {
+            sendCallbackToGameMaker('multiplayer_join_or_create_room', true, roomId)
+        })
+        .catch((error) => {
+            sendCallbackToGameMaker('multiplayer_join_or_create_room', false, error && error.code)
+        })
+}
+
+function playgamaBridgeMultiplayerGetRooms(options) {
+    var parsed = {}
+    try { parsed = JSON.parse(options) } catch (e) {}
+
+    window.bridge.multiplayer.getRooms(parsed)
+        .then((data) => {
+            sendCallbackToGameMaker('multiplayer_get_rooms', true, data)
+        })
+        .catch((error) => {
+            sendCallbackToGameMaker('multiplayer_get_rooms', false, error && error.code)
+        })
+}
+
+function playgamaBridgeMultiplayerInviteToRoom(options) {
+    var parsed = {}
+    try { parsed = JSON.parse(options) } catch (e) {}
+
+    window.bridge.multiplayer.inviteToRoom(parsed)
+        .then((data) => {
+            sendCallbackToGameMaker('multiplayer_invite_to_room', true, data)
+        })
+        .catch((error) => {
+            sendCallbackToGameMaker('multiplayer_invite_to_room', false, error && error.code)
+        })
+}
+
+function playgamaBridgeMultiplayerLeaveRoom() {
+    window.bridge.multiplayer.leaveRoom()
+}
+
+function playgamaBridgeMultiplayerSetRoomOpen(isOpen) {
+    window.bridge.multiplayer.setRoomOpen(Boolean(isOpen))
+}
+
+function playgamaBridgeMultiplayerSetRoomVisible(isVisible) {
+    window.bridge.multiplayer.setRoomVisible(Boolean(isVisible))
+}
+
+function playgamaBridgeMultiplayerSetRoomProperties(properties) {
+    var parsed = {}
+    try { parsed = JSON.parse(properties) } catch (e) {}
+    window.bridge.multiplayer.setRoomProperties(parsed)
+}
+
+function playgamaBridgeMultiplayerSetPlayerProperties(properties) {
+    var parsed = {}
+    try { parsed = JSON.parse(properties) } catch (e) {}
+    window.bridge.multiplayer.setPlayerProperties(parsed)
+}
+
+// data: any JSON (a non-JSON string is sent as is);
+// target: 'all' / 'others' / 'host' / player id / JSON array of player ids, empty for 'others'
+function playgamaBridgeMultiplayerSend(type, data, target) {
+    try {
+        data = JSON.parse(data)
+    }
+    catch (e) {}
+
+    if (typeof target === 'string' && target.trim().startsWith('[')) {
+        try {
+            target = JSON.parse(target)
+        }
+        catch (e) {}
+    }
+
+    window.bridge.multiplayer.send(type, data === '' ? undefined : data, { to: target || undefined })
+}
+
+
 // utils
 function sendStateToGameMaker(type, state) {
     let serializedState = this.serializeData(state)
@@ -707,6 +880,19 @@ function sendSocialEventStateToGameMaker(type, data = null) {
 
     if (data !== null) {
         map.data = data
+    }
+
+    window.GMS_API.send_async_event_social(map)
+}
+
+function sendEventToGameMaker(type, data) {
+    let map = {
+        type: `playgama_bridge_${type}`
+    }
+
+    let serializedData = serializeData(data)
+    if (serializedData !== undefined) {
+        map.data = serializedData
     }
 
     window.GMS_API.send_async_event_social(map)

@@ -334,3 +334,101 @@ if async_load[? "type"] == "playgama_bridge_notifications_cancel_all_callback" {
 		// all notifications canceled
 	}
 }
+
+// multiplayer events
+if async_load[? "type"] == "playgama_bridge_multiplayer_state_changed" {
+	switch async_load[? "data"] {
+		case "disconnected":
+			// your logic here
+			break
+		case "connecting":
+			// your logic here
+			break
+		case "connected":
+			// your logic here
+			break
+		case "reconnecting":
+			// your logic here
+			break
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_multiplayer_room_left" {
+	// "left" | "connection_lost" | "room_closed"
+	var reason = async_load[? "data"]
+	if reason == "connection_lost" {
+		// your logic here
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_multiplayer_room_updated" {
+	// { id, type, maxPlayers, isOpen, isVisible, hostId, properties }
+	var room = json_parse(async_load[? "data"])
+}
+
+if async_load[? "type"] == "playgama_bridge_multiplayer_player_joined" {
+	// { id, name, isHost, isConnected, properties }
+	var player = json_parse(async_load[? "data"])
+}
+
+if async_load[? "type"] == "playgama_bridge_multiplayer_player_left" {
+	var player = json_parse(async_load[? "data"])
+}
+
+if async_load[? "type"] == "playgama_bridge_multiplayer_player_updated" {
+	var player = json_parse(async_load[? "data"])
+}
+
+if async_load[? "type"] == "playgama_bridge_multiplayer_host_changed" {
+	// new host player, data is undefined when there is no host
+	if async_load[? "data"] != undefined {
+		var host = json_parse(async_load[? "data"])
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_multiplayer_message_received" {
+	// { type, data, from }
+	var message = json_parse(async_load[? "data"])
+	var message_type = message.type
+	var sender_id = message.from
+}
+
+// multiplayer callbacks: on failure data is the error code, e.g. "MULTIPLAYER_ROOM_FULL"
+if async_load[? "type"] == "playgama_bridge_multiplayer_create_room_callback" {
+	if async_load[? "success"] {
+		// room code other players join with
+		var room_id = async_load[? "data"]
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_multiplayer_join_room_callback" {
+	if async_load[? "success"] {
+		// your logic here
+	} else {
+		var error_code = async_load[? "data"]
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_multiplayer_join_or_create_room_callback" {
+	if async_load[? "success"] {
+		var room_id = async_load[? "data"]
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_multiplayer_get_rooms_callback" {
+	if async_load[? "success"] {
+		var rooms = json_parse(async_load[? "data"])
+		for (var i = 0; i < array_length(rooms); i += 1)
+		{
+			var room_id = rooms[i].id
+			var player_count = rooms[i].playerCount
+			var max_players = rooms[i].maxPlayers
+		}
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_multiplayer_invite_to_room_callback" {
+	if async_load[? "success"] {
+		// your logic here
+	}
+}
