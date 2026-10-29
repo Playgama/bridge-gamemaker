@@ -46,6 +46,7 @@ if (bridge.multiplayer) {
         bridge.EVENT_NAME.MULTIPLAYER_PLAYER_UPDATED,
         bridge.EVENT_NAME.MULTIPLAYER_HOST_CHANGED,
         bridge.EVENT_NAME.MULTIPLAYER_MESSAGE_RECEIVED,
+        bridge.EVENT_NAME.MULTIPLAYER_SYNC_STATE_RECEIVED,
     ].forEach((eventName) => {
         bridge.multiplayer.on(eventName, (data) => {
             sendEventToGameMaker(eventName, data)
@@ -739,6 +740,10 @@ function playgamaBridgeMultiplayerLaunchRoomId() {
     return serializeData(window.bridge.multiplayer.launchRoomId)
 }
 
+function playgamaBridgeMultiplayerSyncState() {
+    return serializeData(window.bridge.multiplayer.syncState)
+}
+
 // failed operation callbacks carry the error code (e.g. MULTIPLAYER_ROOM_FULL) as data
 function playgamaBridgeMultiplayerCreateRoom(options) {
     var parsed = {}
@@ -845,6 +850,17 @@ function playgamaBridgeMultiplayerSend(type, data, target) {
     }
 
     window.bridge.multiplayer.send(type, data === '' ? undefined : data, { to: target || undefined })
+}
+
+// state: JSON object of the world; anything else is rejected by the core
+// with a warning and the current world is kept
+function playgamaBridgeMultiplayerSetSyncState(state) {
+    try {
+        state = JSON.parse(state)
+    }
+    catch (e) {}
+
+    window.bridge.multiplayer.setSyncState(state)
 }
 
 

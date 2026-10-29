@@ -393,6 +393,11 @@ if async_load[? "type"] == "playgama_bridge_multiplayer_message_received" {
 	var sender_id = message.from
 }
 
+if async_load[? "type"] == "playgama_bridge_multiplayer_sync_state_received" {
+	// the host's world, replaces the local one
+	var world = json_parse(async_load[? "data"])
+}
+
 // multiplayer callbacks: on failure data is the error code, e.g. "MULTIPLAYER_ROOM_FULL"
 if async_load[? "type"] == "playgama_bridge_multiplayer_create_room_callback" {
 	if async_load[? "success"] {
