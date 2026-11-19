@@ -744,6 +744,10 @@ function playgamaBridgeMultiplayerSyncState() {
     return serializeData(window.bridge.multiplayer.syncState)
 }
 
+function playgamaBridgeMultiplayerRegion() {
+    return serializeData(window.bridge.multiplayer.region)
+}
+
 // failed operation callbacks carry the error code (e.g. MULTIPLAYER_ROOM_FULL) as data
 function playgamaBridgeMultiplayerCreateRoom(options) {
     var parsed = {}
@@ -797,6 +801,16 @@ function playgamaBridgeMultiplayerGetRooms(options) {
         })
 }
 
+function playgamaBridgeMultiplayerGetRegions() {
+    window.bridge.multiplayer.getRegions()
+        .then((data) => {
+            sendCallbackToGameMaker('multiplayer_get_regions', true, data)
+        })
+        .catch((error) => {
+            sendCallbackToGameMaker('multiplayer_get_regions', false, error && error.code)
+        })
+}
+
 function playgamaBridgeMultiplayerInviteToRoom(options) {
     var parsed = {}
     try { parsed = JSON.parse(options) } catch (e) {}
@@ -812,6 +826,10 @@ function playgamaBridgeMultiplayerInviteToRoom(options) {
 
 function playgamaBridgeMultiplayerLeaveRoom() {
     window.bridge.multiplayer.leaveRoom()
+}
+
+function playgamaBridgeMultiplayerSetRegion(region) {
+    window.bridge.multiplayer.setRegion(region)
 }
 
 function playgamaBridgeMultiplayerSetRoomOpen(isOpen) {

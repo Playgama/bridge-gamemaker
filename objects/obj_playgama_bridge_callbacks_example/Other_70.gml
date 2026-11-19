@@ -432,6 +432,18 @@ if async_load[? "type"] == "playgama_bridge_multiplayer_get_rooms_callback" {
 	}
 }
 
+if async_load[? "type"] == "playgama_bridge_multiplayer_get_regions_callback" {
+	if async_load[? "success"] {
+		// region ids for a picker, e.g. ["eu", "us", "ap"];
+		// highlight playgama_bridge_multiplayer_region() and pass the pick to playgama_bridge_multiplayer_set_region()
+		var regions = json_parse(async_load[? "data"])
+		for (var i = 0; i < array_length(regions); i += 1)
+		{
+			var region_id = regions[i]
+		}
+	}
+}
+
 if async_load[? "type"] == "playgama_bridge_multiplayer_invite_to_room_callback" {
 	if async_load[? "success"] {
 		// your logic here
