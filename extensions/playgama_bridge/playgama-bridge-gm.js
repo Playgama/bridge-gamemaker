@@ -577,36 +577,15 @@ function playgamaBridgeLeaderboardsGetEntries(id) {
         })
 }
 
-// a separate function: GameMaker extension functions have a fixed argument count
+// a separate function: GameMaker extension functions have a fixed argument count;
+// the callback carries the requested period to tell several tabs apart
 function playgamaBridgeLeaderboardsGetEntriesForPeriod(id, period) {
     window.bridge.leaderboards.getEntries(id, { period })
         .then((data) => {
-            sendCallbackToGameMaker('leaderboards_get_entries_for_period', true, data)
+            sendCallbackToGameMaker('leaderboards_get_entries_for_period', true, data, { period })
         })
         .catch(() => {
-            sendCallbackToGameMaker('leaderboards_get_entries_for_period', false)
-        })
-}
-
-// GameMaker has no null here: a period the leaderboard does not have gets timeLeft -1
-function playgamaBridgeLeaderboardsGetInfo(id) {
-    window.bridge.leaderboards.getInfo(id)
-        .then((data) => {
-            const timeLeft = data.timeLeft || {}
-            const secondsOrMinusOne = (value) => (typeof value === 'number' ? value : -1)
-            sendCallbackToGameMaker('leaderboards_get_info', true, {
-                id: data.id,
-                scoreMode: data.scoreMode,
-                periods: data.periods,
-                timeLeft: {
-                    daily: secondsOrMinusOne(timeLeft.daily),
-                    weekly: secondsOrMinusOne(timeLeft.weekly),
-                    monthly: secondsOrMinusOne(timeLeft.monthly),
-                },
-            })
-        })
-        .catch(() => {
-            sendCallbackToGameMaker('leaderboards_get_info', false)
+            sendCallbackToGameMaker('leaderboards_get_entries_for_period', false, undefined, { period })
         })
 }
 
@@ -921,17 +900,18 @@ function sendStateToGameMaker(type, state) {
     sendSocialEventStateToGameMaker(type, serializedState)
 }
 
-function sendCallbackToGameMaker(type, success, data) {
+// extra: more keys of the async event, e.g. { period }
+function sendCallbackToGameMaker(type, success, data, extra) {
     let serializedData = serializeData(data)
     let serializedSuccess = serializeData(success)
-    sendSocialEventCallbackToGameMaker(type, serializedSuccess, serializedData)
+    sendSocialEventCallbackToGameMaker(type, serializedSuccess, serializedData, extra)
 }
 
-function sendSocialEventCallbackToGameMaker(type, success, data = null) {
-    let map = {
+function sendSocialEventCallbackToGameMaker(type, success, data = null, extra = {}) {
+    let map = Object.assign({}, extra, {
         type: formatSpecifiedCallbackType(type),
         success,
-    }
+    })
 
     if (data !== null) {
         map.data = data

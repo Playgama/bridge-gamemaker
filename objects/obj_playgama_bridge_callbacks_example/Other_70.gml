@@ -174,8 +174,8 @@ if async_load[? "type"] == "playgama_bridge_social_get_post_reward_callback" {
 
 
 // leaderboards callbacks
-// playgama_bridge_leaderboards_set_score(id, score): a "best" leaderboard keeps the best score,
-// a "sum" one adds the score to the player's total, so send what was earned
+// playgama_bridge_leaderboards_set_score(id, score): on a leaderboard set to "sum" in the developer console
+// the score is added to the player's total, so send what was earned
 if async_load[? "type"] == "playgama_bridge_leaderboards_set_score_callback" {
 	if async_load[? "success"] {
 		// your logic
@@ -190,25 +190,12 @@ if async_load[? "type"] == "playgama_bridge_leaderboards_get_entries_callback" {
 }
 
 if async_load[? "type"] == "playgama_bridge_leaderboards_get_entries_for_period_callback" {
+	// the period passed to playgama_bridge_leaderboards_get_entries_for_period(id, period):
+	// "permanent" | "daily" | "weekly" | "monthly"; daily, weekly and monthly reset at 00:00 UTC
+	// (weekly on Monday, monthly on the 1st) and exist only on Playgama leaderboards
+	var period = async_load[? "period"]
 	if async_load[? "success"] {
-		// standings of the period passed to playgama_bridge_leaderboards_get_entries_for_period(id, period):
-		// "permanent" | "daily" | "weekly" | "monthly"
 		var entries = json_parse(async_load[? "data"])
-	}
-}
-
-if async_load[? "type"] == "playgama_bridge_leaderboards_get_info_callback" {
-	if async_load[? "success"] {
-		var info = json_parse(async_load[? "data"])
-		// "best" keeps the best score, "sum" adds every submitted score
-		var score_mode = info.scoreMode
-		// periods playgama_bridge_leaderboards_get_entries_for_period() can read:
-		// ["permanent", "daily", "weekly", "monthly"] on Playgama leaderboards, ["permanent"] on native platform ones
-		var periods = info.periods
-		// whole seconds until the period resets (00:00 UTC, weeks on Monday, months on the 1st), -1 when there is no such period
-		var daily_time_left = info.timeLeft.daily
-		var weekly_time_left = info.timeLeft.weekly
-		var monthly_time_left = info.timeLeft.monthly
 	}
 }
 
