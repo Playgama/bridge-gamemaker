@@ -577,14 +577,32 @@ function playgamaBridgeLeaderboardsGetEntries(id) {
         })
 }
 
-// GameMaker has no null here: timeLeft is -1 for a permanent leaderboard
+// a separate function: GameMaker extension functions have a fixed argument count
+function playgamaBridgeLeaderboardsGetEntriesForPeriod(id, period) {
+    window.bridge.leaderboards.getEntries(id, { period })
+        .then((data) => {
+            sendCallbackToGameMaker('leaderboards_get_entries_for_period', true, data)
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('leaderboards_get_entries_for_period', false)
+        })
+}
+
+// GameMaker has no null here: a period the leaderboard does not have gets timeLeft -1
 function playgamaBridgeLeaderboardsGetInfo(id) {
     window.bridge.leaderboards.getInfo(id)
         .then((data) => {
+            const timeLeft = data.timeLeft || {}
+            const secondsOrMinusOne = (value) => (typeof value === 'number' ? value : -1)
             sendCallbackToGameMaker('leaderboards_get_info', true, {
                 id: data.id,
-                period: data.period,
-                timeLeft: typeof data.timeLeft === 'number' ? data.timeLeft : -1,
+                scoreMode: data.scoreMode,
+                periods: data.periods,
+                timeLeft: {
+                    daily: secondsOrMinusOne(timeLeft.daily),
+                    weekly: secondsOrMinusOne(timeLeft.weekly),
+                    monthly: secondsOrMinusOne(timeLeft.monthly),
+                },
             })
         })
         .catch(() => {
