@@ -174,6 +174,8 @@ if async_load[? "type"] == "playgama_bridge_social_get_post_reward_callback" {
 
 
 // leaderboards callbacks
+// playgama_bridge_leaderboards_set_score(id, score): on a leaderboard set to "sum" in the developer console
+// the score is added to the player's total, so send what was earned
 if async_load[? "type"] == "playgama_bridge_leaderboards_set_score_callback" {
 	if async_load[? "success"] {
 		// your logic
@@ -181,6 +183,17 @@ if async_load[? "type"] == "playgama_bridge_leaderboards_set_score_callback" {
 }
 
 if async_load[? "type"] == "playgama_bridge_leaderboards_get_entries_callback" {
+	if async_load[? "success"] {
+		// permanent (all time) standings
+		var entries = json_parse(async_load[? "data"])
+	}
+}
+
+if async_load[? "type"] == "playgama_bridge_leaderboards_get_entries_for_period_callback" {
+	// the period passed to playgama_bridge_leaderboards_get_entries_for_period(id, period):
+	// "permanent" | "daily" | "weekly" | "monthly"; daily, weekly and monthly reset at 00:00 UTC
+	// (weekly on Monday, monthly on the 1st) and exist only on Playgama leaderboards
+	var period = async_load[? "period"]
 	if async_load[? "success"] {
 		var entries = json_parse(async_load[? "data"])
 	}

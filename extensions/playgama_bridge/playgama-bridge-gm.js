@@ -577,6 +577,18 @@ function playgamaBridgeLeaderboardsGetEntries(id) {
         })
 }
 
+// a separate function: GameMaker extension functions have a fixed argument count;
+// the callback carries the requested period to tell several tabs apart
+function playgamaBridgeLeaderboardsGetEntriesForPeriod(id, period) {
+    window.bridge.leaderboards.getEntries(id, { period })
+        .then((data) => {
+            sendCallbackToGameMaker('leaderboards_get_entries_for_period', true, data, { period })
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('leaderboards_get_entries_for_period', false, undefined, { period })
+        })
+}
+
 function playgamaBridgeLeaderboardsShowNativePopup(id) {
     window.bridge.leaderboards.showNativePopup(id)
         .then(() => {
@@ -888,17 +900,18 @@ function sendStateToGameMaker(type, state) {
     sendSocialEventStateToGameMaker(type, serializedState)
 }
 
-function sendCallbackToGameMaker(type, success, data) {
+// extra: more keys of the async event, e.g. { period }
+function sendCallbackToGameMaker(type, success, data, extra) {
     let serializedData = serializeData(data)
     let serializedSuccess = serializeData(success)
-    sendSocialEventCallbackToGameMaker(type, serializedSuccess, serializedData)
+    sendSocialEventCallbackToGameMaker(type, serializedSuccess, serializedData, extra)
 }
 
-function sendSocialEventCallbackToGameMaker(type, success, data = null) {
-    let map = {
+function sendSocialEventCallbackToGameMaker(type, success, data = null, extra = {}) {
+    let map = Object.assign({}, extra, {
         type: formatSpecifiedCallbackType(type),
         success,
-    }
+    })
 
     if (data !== null) {
         map.data = data
