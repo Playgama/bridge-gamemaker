@@ -186,6 +186,17 @@ if async_load[? "type"] == "playgama_bridge_leaderboards_get_entries_callback" {
 	}
 }
 
+if async_load[? "type"] == "playgama_bridge_leaderboards_get_info_callback" {
+	if async_load[? "success"] {
+		var info = json_parse(async_load[? "data"])
+		// "permanent" | "daily" | "weekly" | "monthly"; daily, weekly and monthly (Playgama leaderboards only)
+		// reset at 00:00 UTC, weekly on Monday, monthly on the 1st; native platform leaderboards are "permanent"
+		var period = info.period
+		// whole seconds until the current period resets, -1 for "permanent"
+		var time_left = info.timeLeft
+	}
+}
+
 if async_load[? "type"] == "playgama_bridge_leaderboards_show_native_popup_callback" {
 	if async_load[? "success"] {
 		// your logic

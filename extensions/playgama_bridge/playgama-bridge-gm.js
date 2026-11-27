@@ -577,6 +577,21 @@ function playgamaBridgeLeaderboardsGetEntries(id) {
         })
 }
 
+// GameMaker has no null here: timeLeft is -1 for a permanent leaderboard
+function playgamaBridgeLeaderboardsGetInfo(id) {
+    window.bridge.leaderboards.getInfo(id)
+        .then((data) => {
+            sendCallbackToGameMaker('leaderboards_get_info', true, {
+                id: data.id,
+                period: data.period,
+                timeLeft: typeof data.timeLeft === 'number' ? data.timeLeft : -1,
+            })
+        })
+        .catch(() => {
+            sendCallbackToGameMaker('leaderboards_get_info', false)
+        })
+}
+
 function playgamaBridgeLeaderboardsShowNativePopup(id) {
     window.bridge.leaderboards.showNativePopup(id)
         .then(() => {
